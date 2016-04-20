@@ -1,8 +1,6 @@
-#I added a new comment
 <?php
 session_start();
 ?>
-
 <!DOCTYPE html>
 <html>
 <head>

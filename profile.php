@@ -61,6 +61,7 @@ session_start();
 <body>
 <h1>Profile Page</h1>
 <a href="friends.php">friends</a>
+<a href="settings.php">settings</a>
 <h5><?php echo"Welcome ". $userName ?> </h5>
 <form method="post" action="profile.php">
 <button type="submit" id="logout" name="logout">logout</button> 
