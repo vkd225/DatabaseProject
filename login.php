@@ -54,12 +54,10 @@ if(isset($_POST["login"]))
 		   $rows=pg_num_rows($result);
 		   if($rows>0)
 		   {
-        $_SESSION['user']=$userName;
-        
-			header('Location: http://localhost/profile.php'); 
-
+        $_SESSION['user'] = $userName;
+			header('Location: http://localhost/profile.php');
 		   }
-		
+
 			else
 			{
 			echo"Wrong password or username";

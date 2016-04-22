@@ -1,6 +1,5 @@
 <?php
 session_start();
-
 ?>
 <?php
    $host        = "host=pdc-amd01.poly.edu";
@@ -14,16 +13,17 @@ session_start();
       echo "Error : Unable to open database\n";
    }
    $userName=$_SESSION['user'];
-		   #diary entry from database
+		   #profile from database
 		   $stmt=pg_prepare($conn,"s","select profile from user_profile where user_name=$1");
 		   $sqlname="s";
 		   $result=pg_execute($conn,$sqlname,array("$userName"));
 		   $rows=pg_num_rows($result);
 		   if ($rows>0)
-		   {	
+		   {
+		   	    echo "Welcome " . $userName;
 		   		$profile=pg_fetch_result($result, 0, 0);
 		   }
-		   else
+		   else if($rows=0)
 		   {
 		   	echo"No such record exists";
 		   }
@@ -31,21 +31,18 @@ session_start();
 		   pg_query($SQL);
 
 		   #diary entry from database
-			$stmt1=pg_prepare($conn,"s","select title,body,time_posted from user_diary where user_name=$1");
+			$stmt1=pg_prepare($conn,"s","select * from user_diary where user_name=$1");
 			$sqlname1="s";
 		    $result1=pg_execute($conn,"s",array("$userName"));
 		    $rows1=pg_num_rows($result1);
 		   if ($rows1>0)
-		   {	
-		   		$diary=pg_fetch_array($result1,0,PGSQL_NUM);
-		   		$title=$diary[0];
-		   		$body=$diary[1];
-		   		$time_posted=$diary[2];
+		   {
+		   		$diary=pg_fetch_array($result1,NULL,PGSQL_NUM);
 		   }
 		   else
 		   {
 		   	echo"No such record exists";
-		   }		   
+		   }
 		   $SQL1=sprintf('DEALLOCATE "%s"',pg_escape_string($sqlname1));
 		   pg_query($SQL1);
 
@@ -53,18 +50,14 @@ session_start();
 
 ?>
 <!DOCTYPE>
-<<!DOCTYPE html>s 
+<!DOCTYPE html>
 <html>
 <head>
 	<title></title>
 </head>
 <body>
 <h1>Profile Page</h1>
-<a href="friends.php">friends</a>
-<a href="settings.php">settings</a>
-<h5><?php echo"Welcome ". $userName ?> </h5>
 <form method="post" action="profile.php">
-<button type="submit" id="logout" name="logout">logout</button> 
 	<table>
 		<tr>
 			<td>
@@ -72,22 +65,43 @@ session_start();
 			<td>
 		</tr>
 		<tr>
-			<td>
-				<input type="text" name="title" id="title" readonly="" value="<?php echo($title);?>"></input>
-			</td>
+		<td>
+		<h3>Profile Comment</h3>
+		</td>
 		</tr>
 		<tr>
-			<td>
-				<input type="text" name="time_posted" id="time_posted" readonly="" value="<?php echo($time_posted);?>"></input>
-			</td>
+		<td>
+		<textarea  name="comment"></textarea>
+		</td>
 		</tr>
 		<tr>
-			<td>
-				<textarea  readonly=""><?php echo($body);?></textarea>
-			</td>
+		<td>
+		<input type="submit" name="comment_button" value="comment"></input>
+		</td>
 		</tr>
-		
-			<?php
+		<?php
+		if($_SERVER['REQUEST_METHOD']=='POST')
+		{
+			if (isset($_POST["comment_button"]))
+			{
+
+				if (isset($_POST["comment"]))
+				{
+				$commenter=$userName;
+				$Comment=$_POST["comment"];
+
+				$stmt3=pg_prepare($conn,"s","select add_comment($1,$2,$3)");
+				$sqlname3="s";
+		   		$result3=pg_execute($conn,"s",array($userName,$commenter,$Comment));
+		   		$SQL3=sprintf('DEALLOCATE "%s"',pg_escape_string($sqlname3));
+		   		pg_query($SQL3);
+		   		header("location:profile.php");
+
+		   		}
+		   	}
+		}
+		?>
+		<?php
 			$stmt2=pg_prepare($conn,"s","select * from sp_search_comments_by_commented_on($1)");
 			$sqlname2="s";
 		   $result2=pg_execute($conn,"s",array("$userName"));
@@ -101,57 +115,79 @@ session_start();
 			<td><textarea><?php echo($row[1]);?> </textarea> </td>
 			<td><input type="text" name="time_posted_comment" readonly="" value="<?php echo ($row[2]);?>"></input></td>
 		  	</tr>
-		  	<?php	
+		  	<?php
 			}
-			}		   
-		  #	   
+			}
 		   $SQL2=sprintf('DEALLOCATE "%s"',pg_escape_string($sqlname2));
 		   pg_query($SQL2);
 			?>
-		<tr>
-		<td>	
-		<h3>Comment here</h3>
+        <!--The diary entry-->
+        <tr>
+		<td>
+		<h3>Diary entry</h3>
 		</td>
 		</tr>
 		<tr>
-		<td>	
-		<textarea  name="comment"></textarea>	
-		</td>
+			<td>
+				<input type="text" name="title" id="diary_title" placeholder="title" required/></input>
+			</td>
 		</tr>
 		<tr>
-		<td>	
-		<input type="submit" name="comment_button" value="comment"></input>
+			<td>
+				<input type="text" name="body" id="diary_body" placeholder="body" required/></input>
+			</td>
+		</tr>
+		<tr>
+		<td>
+		<input type="submit" name="post" value="post"></input>
 		</td>
 		</tr>
 		<?php
 		if($_SERVER['REQUEST_METHOD']=='POST')
 		{
-			if (isset($_POST["comment_button"])) 
+			if (isset($_POST["post"]))
 			{
-				
-				if (isset($_POST["comment"]))
-				{
-				$commenter="ku336";						
-				$Comment=$_POST["comment"];
 
-				$stmt3=pg_prepare($conn,"s","select add_comment($1,$2,$3)");
-				$sqlname3="s";
-		   		$result3=pg_execute($conn,"s",array($userName,$commenter,$Comment));
-		   		$SQL3=sprintf('DEALLOCATE "%s"',pg_escape_string($sqlname3));
-		   		pg_query($SQL3);
+				if (isset($_POST["body"]))
+				{
+				$body=$_POST["body"];
+				$title=$_POST["title"];
+
+				$stmt5=pg_prepare($conn,"s","select sp_insert_user_diary($1,$2,$3)");
+				$sqlname5="s";
+		   		$result5=pg_execute($conn,"s",array($userName,$title,$body));
+		   		$SQL5=sprintf('DEALLOCATE "%s"',pg_escape_string($sqlname5));
+		   		pg_query($SQL5);
 		   		header("location:profile.php");
 
 		   		}
-		   	}	
-		   	if (isset($_POST['logout'])) 
+		   	}
+		}
+		?>
+		<?php
+			$stmt6=pg_prepare($conn,"s","select * from sp_post_diary_entry($1)");
+			$sqlname6="s";
+		   $result6=pg_execute($conn,"s",array("$userName"));
+		   $rows6=pg_num_rows($result6);
+		   if ($rows6>0)
+		   {	while ($row=pg_fetch_array($result6,NULL,PGSQL_NUM))
 				{
-					session_unset();
-					session_destroy();
-					header('location: login.php');
-				}
-		}   	 
-		?>	
-		
+			?>
+			<tr>
+			<td><input type="text" name="title_" readonly="" value="<?php echo ($row[1]);?>"></input></td>
+			<td><textarea><?php echo($row[2]);?> </textarea> </td>
+			<td><input type="text" name="time_posted_comment" readonly="" value="<?php echo ($row[3]);?>"></input></td>
+		  	</tr>
+		  	<?php
+			}
+			}
+		   $SQL6=sprintf('DEALLOCATE "%s"',pg_escape_string($sqlname6));
+		   pg_query($SQL6);
+			?>
+
+
+
+
 </table>
 </form>
 </body>
