@@ -7,7 +7,6 @@
 </head>
 <body>
 <h1> REGISTRATION PAGE</h1>
-<a href="login.php">login</a>
 <form id='registration' role='form' action='registration.php' method='post' >
 <table>
 <tr>
@@ -51,6 +50,8 @@
    if(!$conn)
    {
       echo "Error : Unable to open database\n";
+   } else {
+      echo "Opened database successfully\n";
    }
    if($_SERVER["REQUEST_METHOD"]=="POST")
    {
@@ -64,48 +65,42 @@
 		   {
 			   echo"User name already exists , Please choose a different user name";
 		   }
-	   
-	   		else
-	   		{
-		  		
-		    	if(isset($_POST["FirstName"]))
-				{
-					$firstName= $_POST["FirstName"];
-				}
-				if(isset($_POST["LastName"]))
-				{
-					$lastName= $_POST["LastName"];
-				}
-				if(isset($_POST["UserName"]))
-				{
-					$userName= $_POST["UserName"];
-				}
-				if(isset($_POST["Password"]))
-				{
-					$password= $_POST["Password"];
-				}
-				if(isset($_POST["Age"]))
-				{
-					$age= $_POST["Age"];
-				}
-				if(isset($_POST["City"]))
-				{
-					 $city= $_POST["City"];
-					 
-				}
+
+	   else
+	   {
+		  echo "hello";
+		    if(isset($_POST["FirstName"]))
+			{
+				$firstName= $_POST["FirstName"];
 			}
-		
-		$stmt1=pg_prepare($conn,"s1","select sp_signup($1,$2,$3,$4,$5,$6,$7)");
-		echo $firstName,$lastName,$userName,$password,$age,$city;
-		$result1=pg_execute($conn,"s1",array($firstName,$lastName,$userName,$password,$age,$city,1));  
-		header('location: login.php');	
-		
+			if(isset($_POST["LastName"]))
+			{
+				$lastName= $_POST["LastName"];
+			}
+			if(isset($_POST["UserName"]))
+			{
+				$userName= $_POST["UserName"];
+			}
+			if(isset($_POST["Password"]))
+			{
+				$password= $_POST["Password"];
+			}
+			if(isset($_POST["Age"]))
+			{
+				$age= $_POST["Age"];
+			}
+			if(isset($_POST["City"]))
+			{
+				 $city= $_POST["City"];
+				 echo $city;
+			}
+		}
 
-  		}
+		}
+		$Insert_query=pg_query($conn,"select sp_signup('$firstName','$lastName','$userName','$password','$age','$city','1')");
+		 header('location: login.php');
    }
-
 }
-
 ?>
 </body>
 </html>
