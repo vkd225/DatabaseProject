@@ -129,12 +129,12 @@ session_start();
 		</tr>
 		<tr>
 			<td>
-				<input type="text" name="title" id="diary_title" placeholder="title" required/></input>
+				<input type="text" name="title" id="diary_title" placeholder="title" /></input>
 			</td>
 		</tr>
 		<tr>
 			<td>
-				<input type="text" name="body" id="diary_body" placeholder="body" required/></input>
+				<input type="text" name="body" id="diary_body" placeholder="body" /></input>
 			</td>
 		</tr>
 		<tr>
@@ -174,11 +174,40 @@ session_start();
 				{
 			?>
 			<tr>
-			<td><input type="text" name="title_" readonly="" value="<?php echo ($row[0]);?>"></input></td>
-			<td><textarea><?php echo($row[1]);?> </textarea> </td>
-			<td><input type="text" name="time_posted_comment" readonly="" value="<?php echo ($row[2]);?>"></input></td>
+			<td><input type="text" name="title_" readonly="" value="<?php echo ($row[1]);?>"></input></td>
+			<td><textarea><?php echo($row[2]);?> </textarea> </td>
+			<td><input type="text" name="time_posted_comment" readonly="" value="<?php echo ($row[3]);?>"></input></td>
 		  	</tr>
-		  	<?php
+		  	<tr>
+			<td>
+				<input type="text" name="diary_body_comment" id="diary_body_comment" placeholder="comment"/></input>
+			</td>
+			<td>
+		<input type="submit" name="diary_comment" value="diary_comment"></input>
+		</td>
+		</tr>
+		</td>
+		<?php
+		$diaryentry_id=$row[0];
+		if($_SERVER['REQUEST_METHOD']=='POST')
+		{
+				if (isset($_POST["diary_comment"]))
+				{
+					if (isset($_POST["diary_body_comment"]))
+			{
+				$body=$_POST["diary_body_comment"];
+				$stmt7=pg_prepare($conn,"k","select sp_insert_user_diary_comment($1,$2,$3,$4)");
+				$sqlname7="k";
+		   		$result7=pg_execute($conn,"k",array($userName,$userName,$body,$diaryentry_id));
+		   		$SQL7=sprintf('DEALLOCATE "%s"',pg_escape_string($sqlname7));
+		   		pg_query($SQL7);
+		   		header("location:profile.php");
+
+		   		}
+		   	}
+		}
+		?>
+				  	<?php
 			}
 			}
 		   $SQL6=sprintf('DEALLOCATE "%s"',pg_escape_string($sqlname6));
