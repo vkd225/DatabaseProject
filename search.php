@@ -16,7 +16,7 @@
    	$userName='psk287';
 ?>
 
-<<!DOCTYPE html>
+<!DOCTYPE html>
 <html>
 <head>
 	<title></title>
@@ -32,11 +32,11 @@
 			<tr>
 			<tr>
 			<td><label>Search What</label></td>
-				<td><input type="radio" name="SearchWhat" id="Profile" value="Profile" > Profile </td>
+				<td><input type="radio" name="SearchWhat" id="Profile" value="Profile" required > Profile </td>
  				<td><input type="radio" name="SearchWhat" id="DiaryEntry" value="DiaryEntry" > Diary Entry </td>
 			</tr>
 			<td><label>Search By</label></td>
-				<td><input type="radio" name="SearchBy" id="Friend" value="Friend" > Friend </td>
+				<td><input type="radio" name="SearchBy" id="Friend" value="Friend" required> Friend </td>
  				<td><input type="radio" name="SearchBy" id="FriendOfFriend" value="FriendOfFriend" > Friend Of Friend </td>
  				<td><input type="radio" name="SearchBy" id="Everyone" value="Everyone" > Everyone </td>
 			</tr>
@@ -149,7 +149,7 @@
 								   				pg_query($SQL2);	
 					   						}
 
-					   					if($selectedSearchBy=="Friend")
+					   					elseif($selectedSearchBy=="Friend")
 					   						{
 					   							$stmt3=pg_prepare($conn,"s","select * from sp_view_user_diary_entry_friend_updated($1,$2)");
 												$sqlname3="s";
@@ -179,7 +179,38 @@
 													}
 												$SQL3=sprintf('DEALLOCATE "%s"',pg_escape_string($sqlname3));
 								   				pg_query($SQL3);	
-					   						}				
+					   						}
+					   					elseif (selectedSearchBy=="FriendOfFriend")
+					   						{
+					   							$stmt4=pg_prepare($conn,"s","select * from sp_view_user_diary_entry_friend_updated($1,$2)");
+												$sqlname4="s";
+												$result4=pg_execute($conn,"s",array($userName,$keyword));
+								   				$rows3=pg_num_rows($result4);
+								   				if ($rows4>0)
+								  					{	
+								  					 	while ($row4=pg_fetch_array($result4,NULL,PGSQL_NUM))
+															{
+?>
+																<tr>
+																	<td>
+																		<input type="text" name="user" readonly="" value="<?php echo ($row4[0]);?>"></input>
+																	</td>
+																	<td>
+																		<input type="text" name="title" readonly="" value="<?php echo ($row4[1]);?>"></input>
+																	</td>
+																	<td>
+																		<textarea><?php echo($row4[2]);?> </textarea>
+																	</td>
+																	<td>
+																		<input type="text" name="time_posted" readonly="" value="<?php echo ($row4[3]);?>"></input>
+																	</td>
+																</tr>
+<?php
+															}
+													}
+												$SQL4=sprintf('DEALLOCATE "%s"',pg_escape_string($sqlname4));
+								   				pg_query($SQL4);
+					   						}					
 					   				}
 							}					
 					}
