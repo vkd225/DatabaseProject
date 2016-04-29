@@ -1,0 +1,182 @@
+<?php
+session_start();
+?>
+<?php
+   $host        = "host=pdc-amd01.poly.edu";
+   $port        = "port=5432";
+   $dbname      = "dbname=ku336";
+   $credentials = "user=ku336 password=e0eycb7p";
+
+   $conn = pg_connect( "$host $port $dbname $credentials"  );
+   if(!$conn)
+   {
+      echo "Error : Unable to open database\n";
+   }
+   $userName=$_SESSION['user'];
+   $friend=$_SESSION['friend'];
+		   #profile from database
+		   $stmt=pg_prepare($conn,"s","select profile from user_profile where user_name=$1");
+		   $sqlname="s";
+		   $result=pg_execute($conn,$sqlname,array("$friend"));
+		   $rows=pg_num_rows($result);
+		   if ($rows>0)
+		   {
+		   	    echo "This page belongs to  " . $friend ;
+		   		$profile=pg_fetch_result($result, 0, 0);
+		   }
+		   else if($rows=0)
+		   {
+		   	echo"No such record exists";
+		   }
+		   $SQL=sprintf('DEALLOCATE "%s"',pg_escape_string($sqlname));
+		   
+		   pg_query($SQL);
+
+		   #diary entry from database
+			$stmt1=pg_prepare($conn,"s","select * from user_diary where user_name=$1");
+			$sqlname1="s";
+		    $result1=pg_execute($conn,"s",array("$friend"));
+		    $rows1=pg_num_rows($result1);
+		   if ($rows1>0)
+		   {
+		   		$diary=pg_fetch_array($result1,NULL,PGSQL_NUM);
+		   }
+		   else
+		   {
+		   	echo"No such record exists";
+		   }
+		   $SQL1=sprintf('DEALLOCATE "%s"',pg_escape_string($sqlname1));
+		   pg_query($SQL1);
+
+
+
+?>
+<!DOCTYPE>
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+<h1>Profile Page</h1>
+<a href="friends.php">Friends</a>
+<form method="post" action="profile.php">
+	<table>
+		<tr>
+			<td>
+				<textarea  readonly=""><?php echo($profile);?></textarea>
+			<td>
+		</tr>
+		<tr>
+		<td>
+		<h3>Profile Comment</h3>
+		</td>
+		</tr>
+		<tr>
+		<td>
+		<textarea  name="comment"></textarea>
+		</td>
+		</tr>
+		<tr>
+		<td>
+		<input type="submit" name="comment_button" value="comment"></input>
+		</td>
+		</tr>
+		<?php
+		if($_SERVER['REQUEST_METHOD']=='POST')
+		{
+			if (isset($_POST["comment_button"]))
+			{
+
+				if (isset($_POST["comment"]))
+				{
+				$commenter=$userName;
+				$Comment=$_POST["comment"];
+
+				$stmt3=pg_prepare($conn,"s","select add_comment($1,$2,$3)");
+				$sqlname3="s";
+		   		$result3=pg_execute($conn,"s",array($userName,$commenter,$Comment));
+		   		$SQL3=sprintf('DEALLOCATE "%s"',pg_escape_string($sqlname3));
+		   		pg_query($SQL3);
+		   		header("location:profile.php");
+
+		   		}
+		   	}
+		}
+		?>
+		<?php
+			$stmt2=pg_prepare($conn,"s","select * from sp_search_comments_by_commented_on($1)");
+			$sqlname2="s";
+		   $result2=pg_execute($conn,"s",array("$friend"));
+		   $rows2=pg_num_rows($result2);
+		   if ($rows2>0)
+		   {	while ($row=pg_fetch_array($result2,NULL,PGSQL_NUM))
+				{
+			?>
+			<tr>
+			<td><input type="text" name="commenter" readonly="" value="<?php echo ($row[0]);?>"></input></td>
+			<td><textarea><?php echo($row[1]);?> </textarea> </td>
+			<td><input type="text" name="time_posted_comment" readonly="" value="<?php echo ($row[2]);?>"></input></td>
+		  	</tr>
+		  	<?php
+			}
+			}
+		   $SQL2=sprintf('DEALLOCATE "%s"',pg_escape_string($sqlname2));
+		   pg_query($SQL2);
+			?>
+        <!--The diary entry-->
+        <tr>
+		<td>
+		<h3>Diary entry</h3>
+		</td>
+		</tr>
+		<tr>
+			<td>
+				<input type="text" name="title" id="diary_title" placeholder="title" required/></input>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<input type="text" name="body" id="diary_body" placeholder="body" required/></input>
+			</td>
+		</tr>
+		<tr>
+		<td>
+		<input type="submit" name="post" value="post"></input>
+		</td>
+		</tr>
+		<?php
+		if($_SERVER['REQUEST_METHOD']=='POST')
+		{
+			
+		
+		?>
+		<?php
+			$stmt6=pg_prepare($conn,"s","select * from sp_post_diary_entry($1)");
+			$sqlname6="s";
+		   $result6=pg_execute($conn,"s",array("$userName"));
+		   $rows6=pg_num_rows($result6);
+		   if ($rows6>0)
+		   {	while ($row=pg_fetch_array($result6,NULL,PGSQL_NUM))
+				{
+			?>
+			<tr>
+			<td><input type="text" name="title_" readonly="" value="<?php echo ($row[0]);?>"></input></td>
+			<td><textarea><?php echo($row[1]);?> </textarea> </td>
+			<td><input type="text" name="time_posted_comment" readonly="" value="<?php echo ($row[2]);?>"></input></td>
+		  	</tr>
+		  	<?php
+			}
+			}
+		   $SQL6=sprintf('DEALLOCATE "%s"',pg_escape_string($sqlname6));
+		   pg_query($SQL6);
+		}
+			?>
+
+
+
+
+</table>
+</form>
+</body>
+</html>
