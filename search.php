@@ -23,6 +23,9 @@
 </head>
 <body>
 <h1>The Search Page</h1>
+<a href="profile.php">Profile</a>
+<a href="settings.php">Settings</a>
+<a href="friends.php">Friends</a>
 <form method="Post" >
 	<table>
 			<tr>

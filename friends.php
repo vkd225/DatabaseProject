@@ -22,6 +22,7 @@ session_start();
 	<h1>FRIENDS</h1>
 	<a href="profile.php">Profile</a>
 	<a href="settings.php">Settings</a>
+	<a href="search.php">Search</a>
 	<form id='friend' role='form' action='friends.php' method='post'>
 		<button type="submit" id="logout" name="logout">logout</button> 
 			
