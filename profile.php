@@ -39,6 +39,9 @@ session_start();
 </head>
 <body>
 <h1>Profile Page</h1>
+<a href="settings.php">Settings</a>
+<a href="friends.php">Friends</a>
+<a href="search.php">Search</a>
 <form method="post" action="profile.php">
 	<table>
 		<tr>
@@ -197,7 +200,7 @@ session_start();
 			$sqlname8="s";
 			$result8=pg_execute($conn,"s",array("$userName"));
 
-			$rows8=pg_num_rows($result6);
+			$rows8=pg_num_rows($result8);
 		  	if ($rows8>0)
 		   		{
 		   			while ($row=pg_fetch_array($result8,NULL,PGSQL_NUM))

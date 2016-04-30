@@ -23,7 +23,7 @@ session_start();
 		{	
 			$selected=pg_fetch_array($result1,0,PGSQL_NUM);
 			$selectedPrivacy=$selected[0];	
-			echo $selectedPrivacy;
+			
 			if ($selectedPrivacy==3) 
 				{
 					$privacyPublic='checked';
@@ -43,23 +43,19 @@ session_start();
 	$SQL1=sprintf('DEALLOCATE "%s"',pg_escape_string($sqlname1));
 	pg_query($SQL1);
 ?>
-?>
+
 <!DOCTYPE html>
 <html>
 <head>
 	<title>Settings Page</title>
 	</head>
 <body>
-	<h5> Privacy Settings </h5>
+	<h1> Privacy Settings </h1>
+	<a href="profile.php">Profile</a>
+	<a href="friends.php">Friends</a>
+	<a href="search.php">Search</a>
 	<form action="settings.php" method="Post"> 
 		<table>
-			<tr>
-				<td><a href="profile.php">Profile</a></td>
-			</tr>
-			<tr>
-				<td><a href="friends.php">Friends</a></td>
-			</tr>
-			
 			<tr>
 				<td><input type="radio" name="Privacy" id="Public" value="Public" <?php echo $privacyPublic;?>> Public </td>
 	  		</tr>

@@ -23,6 +23,9 @@
 </head>
 <body>
 <h1>The Search Page</h1>
+<a href="profile.php">Profile</a>
+<a href="settings.php">Settings</a>
+<a href="friends.php">Friends</a>
 <form method="Post" >
 	<table>
 			<tr>
@@ -86,7 +89,29 @@
 								   			}
 							  		 	elseif($selectedSearchBy=="FriendOfFriend")
 								   			{	
-									   		
+												$stmt5=pg_prepare($conn,"s","select * from sp_view_user_profile_friend_changed($1,$2)");
+												$sqlname5="s";
+												$result5=pg_execute($conn,"s",array($userName,$keyword));
+								   				$rows5=pg_num_rows($result5);
+								   				if ($rows5>0)
+								  					{	
+								  					 	while ($row5=pg_fetch_array($result5,NULL,PGSQL_NUM))
+															{
+								
+?>
+																<tr>
+																	<td>
+																		<input type="text" name="user" readonly="" value="<?php echo ($row5[0]);?>"></input>
+																	</td>
+																	<td>
+																		<textarea><?php echo($row5[1]);?> </textarea>
+																	</td>
+																</tr>
+<?php
+															}
+													}
+												$SQL5=sprintf('DEALLOCATE "%s"',pg_escape_string($sqlname5));
+								   				pg_query($SQL5);									   		
 								   			}
 								   		elseif($selectedSearchBy=="Everyone")
 								   			{	

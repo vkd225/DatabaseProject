@@ -6,6 +6,7 @@
 
 </head>
 	<body>
+		<a href="login.php">LoGIN HERE</a>
 		<h1> REGISTRATION PAGE</h1>
 		<form id='registration' role='form' action='registration.php' method='post' >
 			<table>
