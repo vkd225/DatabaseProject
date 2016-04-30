@@ -46,31 +46,31 @@
 
 			<tr><td><input type='submit' name='Search' value='Search'/></td>
 			</tr>
-			
+
 <?php
 		if (isset($_POST['Search']))
 			{
 				if(isset($_POST['searchText']))
-					{		
+					{
 						$selectedSearchBy=$_POST['SearchBy'];
 						$selectedSearchWhat=$_POST['SearchWhat'];
 						$keyword=$_POST['searchText'];
-						
-						if(isset($_POST['SearchWhat']))	
+
+						if(isset($_POST['SearchWhat']))
 							{
 								if($selectedSearchWhat=="Profile")
 									{
 										if($selectedSearchBy=="Friend")
-								   			{	
+								   			{
 								   				$stmt=pg_prepare($conn,"s","select * from sp_view_user_profile_friend_changed($1,$2)");
 												$sqlname="s";
 												$result=pg_execute($conn,"s",array($userName,$keyword));
 								   				$rows=pg_num_rows($result);
 								   				if ($rows>0)
-								  					{	
+								  					{
 								  					 	while ($row=pg_fetch_array($result,NULL,PGSQL_NUM))
 															{
-								
+
 ?>
 																<tr>
 																	<td>
@@ -88,16 +88,16 @@
 
 								   			}
 							  		 	elseif($selectedSearchBy=="FriendOfFriend")
-								   			{	
-												$stmt5=pg_prepare($conn,"s","select * from sp_view_user_profile_friend_changed($1,$2)");
+								   			{
+												$stmt5=pg_prepare($conn,"s","select * from sp_view_user_profile_friend_of_friend($1,$2)");
 												$sqlname5="s";
 												$result5=pg_execute($conn,"s",array($userName,$keyword));
 								   				$rows5=pg_num_rows($result5);
 								   				if ($rows5>0)
-								  					{	
+								  					{
 								  					 	while ($row5=pg_fetch_array($result5,NULL,PGSQL_NUM))
 															{
-								
+
 ?>
 																<tr>
 																	<td>
@@ -111,16 +111,16 @@
 															}
 													}
 												$SQL5=sprintf('DEALLOCATE "%s"',pg_escape_string($sqlname5));
-								   				pg_query($SQL5);									   		
+								   				pg_query($SQL5);
 								   			}
 								   		elseif($selectedSearchBy=="Everyone")
-								   			{	
+								   			{
 												$stmt1=pg_prepare($conn,"s","select * from sp_view_user_profile_public($1)");
 												$sqlname1="s";
 												$result1=pg_execute($conn,"s",array($keyword));
 								   				$rows1=pg_num_rows($result1);
 								   				if ($rows1>0)
-								  					{	
+								  					{
 								  					 	while ($row1=pg_fetch_array($result1,NULL,PGSQL_NUM))
 															{
 ?>
@@ -137,8 +137,8 @@
 													}
 												$SQL1=sprintf('DEALLOCATE "%s"',pg_escape_string($sqlname1));
 								   				pg_query($SQL1);
-								   			
-								   			}	
+
+								   			}
 					   				}
 					   			elseif($selectedSearchWhat=="DiaryEntry")
 					   				{
@@ -149,7 +149,7 @@
 												$result2=pg_execute($conn,"s",array($keyword));
 								   				$rows2=pg_num_rows($result2);
 								   				if ($rows2>0)
-								  					{	
+								  					{
 								  					 	while ($row2=pg_fetch_array($result2,NULL,PGSQL_NUM))
 															{
 ?>
@@ -171,17 +171,17 @@
 															}
 													}
 												$SQL2=sprintf('DEALLOCATE "%s"',pg_escape_string($sqlname2));
-								   				pg_query($SQL2);	
+								   				pg_query($SQL2);
 					   						}
 
 					   					elseif($selectedSearchBy=="Friend")
 					   						{
-					   							$stmt3=pg_prepare($conn,"s","select * from sp_view_user_diary_entry_friend_updated($1,$2)");
+					   							$stmt3=pg_prepare($conn,"s","select * from sp_view_user_diary_friend($1,$2)");
 												$sqlname3="s";
 												$result3=pg_execute($conn,"s",array($userName,$keyword));
 								   				$rows3=pg_num_rows($result3);
 								   				if ($rows3>0)
-								  					{	
+								  					{
 								  					 	while ($row3=pg_fetch_array($result3,NULL,PGSQL_NUM))
 															{
 ?>
@@ -203,16 +203,16 @@
 															}
 													}
 												$SQL3=sprintf('DEALLOCATE "%s"',pg_escape_string($sqlname3));
-								   				pg_query($SQL3);	
+								   				pg_query($SQL3);
 					   						}
-					   					elseif (selectedSearchBy=="FriendOfFriend")
+					   					elseif ($selectedSearchBy=="FriendOfFriend")
 					   						{
 					   							$stmt4=pg_prepare($conn,"s","select * from sp_view_user_diary_entry_friend_updated($1,$2)");
 												$sqlname4="s";
 												$result4=pg_execute($conn,"s",array($userName,$keyword));
 								   				$rows3=pg_num_rows($result4);
-								   				if ($rows4>0)
-								  					{	
+								   				if ($rows3>0)
+								  					{
 								  					 	while ($row4=pg_fetch_array($result4,NULL,PGSQL_NUM))
 															{
 ?>
@@ -235,14 +235,14 @@
 													}
 												$SQL4=sprintf('DEALLOCATE "%s"',pg_escape_string($sqlname4));
 								   				pg_query($SQL4);
-					   						}					
+					   						}
 					   				}
-							}					
+							}
 					}
 			}
 ?>
 	</table>
-	
+
 </form>
 </body>
 </html>
