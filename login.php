@@ -66,7 +66,7 @@ session_start();
             <h5 class="text-center"> Not a Member Yet.</h5>
             <a class="text-center" href="registration.php">
               <div class="centered">
-                <input type="submit" value="Sign Up" class="btn btn-info"></input> </a>
+                <input type="submit" value="SignUp" name="SignUp" id="SignUp" class="btn btn-info"></input> </a>
               </div>
           </div>
         </div>
@@ -102,6 +102,10 @@ session_start();
                   }
               }
           }
+         elseif (isset($_POST["SignUp"]))
+          {
+            header('Location: http://localhost/registration.php');       
+          } 
       ?>
     </div>
   </body>
