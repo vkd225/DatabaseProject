@@ -46,30 +46,60 @@ session_start();
 
 <!DOCTYPE html>
 <html>
-<head>
-	<title>Settings Page</title>
+	<head>
+		<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+		<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+		<title>Settings Page</title>
 	</head>
-<body>
-	<h1> Privacy Settings </h1>
-	<a href="profile.php">Profile</a>
-	<a href="friends.php">Friends</a>
-	<a href="search.php">Search</a>
+<body data-spy="scroll" data-target=".navbar" data-spy="affix" data-offset="50">
+	<div class="container">
+		<div class="page-header text-center">
+			<h1>Settings</h1>
+		</div>
+		<div class="row">
+			<nav class="navbar navbar-default">
+  				<div class="container-fluid">
+				    <div class="navbar-header">
+				      <a class="navbar-brand" href="profile.php">Techies</a>
+				    </div>
+				    <ul class="nav navbar-nav">
+				      <li><a href="profile.php">Profile</a></li>
+				      <li><a href="search.php">Search</a></li> 
+				      <li><a href="friends.php">Friends</a></li> 
+				    </ul>
+				    <ul class="nav navbar-nav navbar-right">
+				        <li><a href=""><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+				    </ul>
+				  </div>
+				</nav>
+		</div>
+	
 	<form action="settings.php" method="Post"> 
-		<table>
-			<tr>
-				<td><input type="radio" name="Privacy" id="Public" value="Public" <?php echo $privacyPublic;?>> Public </td>
-	  		</tr>
-	  		<tr>
-	  			<td><input type="radio" name="Privacy" id="Friends" value="Friends" <?php print $privacyFriend;?>> Friends </td>
-			</tr>
-			<tr>
-				<td><input type="radio" name="Privacy" id="FriendsOfFriends" value="FriendsOfFriends" <?php print $privacyFOF;?> >Friends of Friends </td>
-	  		</tr>
-	  		<tr>
-	  			<td><button id="update" name="update" value="update">Update</button></td>
-	  		</tr>
+		<div class="radio">
+			<div class="row ">
+				<div class="col-sm-3">
+					<input type="radio"  name="Privacy" id="Public" value="Public" <?php echo $privacyPublic;?>> Public 
+				</div>
+	  		</div>
+	  		<div class="row">
+	  			<div class="col-sm-3">
+	  				<input type="radio" name="Privacy" id="Friends" value="Friends" <?php print $privacyFriend;?>> Friends 
+	  			</div>
+			</div>
+			<div class="row">
+				<div class="col-sm-3">
+				<input type="radio" name="Privacy" id="FriendsOfFriends" value="FriendsOfFriends" <?php print $privacyFOF;?> >Friends of Friends
+				</div>
+	  		</div>
+	  		<div class="row">
+	  			<div class="col-sm-3">
+	  				<button id="update" class="btn btn-primary" name="update" value="update">Update</button>
+	  			</div>
+	  		</div>
+	  	</div>	
   			
-		</table>
+		
 
 	</form>	
 
