@@ -1,6 +1,15 @@
 
 <?php
 session_start();
+  $host        = "host=pdc-amd01.poly.edu";
+  $port        = "port=5432";
+  $dbname      = "dbname=ku336";
+  $credentials = "user=ku336 password=e0eycb7p";
+  $conn = pg_connect( "$host $port $dbname $credentials"  );
+    if(!$conn)
+      {
+        echo "Error : Unable to open database\n";
+      }
 ?>
 
 <!DOCTYPE html>
@@ -33,14 +42,14 @@ session_start();
             <div class="panel-body">
 
               <div class="control-group">
-                <label class="control-label"  for="username">Username:</label>
+                <label class="control-label"  for="userName">Username:</label>
                   <div class="controls">
                     <input type="text" name="userName" id="userName" class="form-control input-sm" placeholder="Username" maxlength="50" required/>
                   </div>
               </div>
 
               <div class="control-group">
-                <label class="control-label"  for="username">Passwrod:</label>
+                <label class="control-label"  for="password">Passwrod:</label>
                   <div class="controls">
                     <input type="password" name="password" id="password" class="form-control input-sm" placeholder="Password" maxlength="50" required/>
                     <p>               </p>
@@ -48,7 +57,7 @@ session_start();
               </div>
 
               <div class="centered">
-                <input type="submit" value="Login" class="btn btn-success"></input>
+                <input type="submit" value="Login" name="Login" id="Login" class="btn btn-success"></input>
               </div>
             </div>
           </div>
@@ -65,24 +74,18 @@ session_start();
       
 
       <?php
-        if(isset($_POST["login"]))
-          {
-            $host        = "host=pdc-amd01.poly.edu";
-            $port        = "port=5432";
-            $dbname      = "dbname=ku336";
-            $credentials = "user=ku336 password=e0eycb7p";
-            $conn = pg_connect( "$host $port $dbname $credentials"  );
-            if(!$conn)
-              {
-                echo "Error : Unable to open database\n";
-              }
+        if(isset($_POST["Login"]))
+          { 
+            echo "I am in login";
+            
             
             if($_SERVER["REQUEST_METHOD"]=="POST")
               {
-                if(isset($_POST["username"]))
-                  {
-                
-                    $userName=$_POST["username"];
+                echo "i am in post";
+                if(isset($_POST["userName"]))
+                  { 
+                    echo "i am in username";
+                    $userName=$_POST["userName"];
                     $password=$_POST["password"];
                     $stmt=pg_prepare($conn,"verify_login","select * from users where user_name=$1 and password=$2");
                     $result=pg_execute($conn,"verify_login",array($userName,$password));
