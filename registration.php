@@ -24,7 +24,7 @@
 
         <div class="row centered-form">
         	<h1 class="text-center">Registration Page</h1>
-        	
+
 			<form id='registration' role='form' action='registration.php' method='post' >
 
 	        	<div class="col-xs-12 col-sm-8 col-md-4 col-sm-offset-2 col-md-offset-4">
@@ -63,7 +63,7 @@
 				    					</div>
 				    				</div>
 				    			</div>
-				    			
+
 				    			<div class="row">
 				    				<div class="col-xs-6 col-sm-6 col-md-6">
 				    					<div class="form-group">
@@ -76,7 +76,7 @@
 				    					</div>
 				    				</div>
 				    			</div>
-				    			<input type="submit" value="Sign Up" class="btn btn-info btn-block"></input>
+				    			<input type="submit" value="Signup" name="Signup" id="Signup" class="btn btn-info btn-block"></input>
 				    		</form>
 				    		<?php
 							 	if(isset($_POST["Signup"]))
@@ -90,7 +90,7 @@
 									   		{
 									   	    	echo "Error : Unable to open database\n";
 									   		}
-									    else 
+									    else
 									    	{
 									   		    echo "Opened database successfully\n";
 									  		}
@@ -121,9 +121,9 @@
 																	{
 																		$userName= $_POST["UserName"];
 																	}
-																if(isset($_POST["Password"]))
+																if(isset($_POST["password"]))
 																	{
-																		$password= $_POST["Password"];
+																		$password= $_POST["password"];
 																	}
 																if(isset($_POST["Age"]))
 																	{
@@ -136,8 +136,8 @@
 																	}
 															}
 													}
-												$Insert_query=pg_query($conn,"select sp_signup('$firstName','$lastName','$userName','$password','$age','$city','1')");
-											 	header('location: login.php');
+												$Insert_query=pg_query($conn,"select * from sp_signup('$firstName','$lastName','$userName','$password','$age','$city','1')");
+											 	header('location: http://localhost/login.php');
 									   		}
 									}
 							?>

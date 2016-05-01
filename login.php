@@ -10,7 +10,15 @@ session_start();
       {
         echo "Error : Unable to open database\n";
       }
+      if($_SERVER["REQUEST_METHOD"]=="POST")
+      {
+      if (isset($_POST["Signup"]))
+          {
+            header('Location: http://localhost/registration.php');
+          }
+      }
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -29,13 +37,13 @@ session_start();
         body { background: WhiteSmoke !important; }
         .centered
         {
-        text-align:center;  
+        text-align:center;
         }
       </style>
       <div class="row centered-form">
-        <h1 class="text-center">Welcome Back</h1> 
-      </div> 
-          
+        <h1 class="text-center">Welcome Back</h1>
+      </div>
+
       <form id='login' role='form' action='login.php' method='post' >
         <div class="col-xs-12 col-sm-8 col-md-4 col-sm-offset-2 col-md-offset-4">
           <div class="panel panel-default">
@@ -44,14 +52,14 @@ session_start();
               <div class="control-group">
                 <label class="control-label"  for="userName">Username:</label>
                   <div class="controls">
-                    <input type="text" name="userName" id="userName" class="form-control input-sm" placeholder="Username" maxlength="50" required/>
+                    <input type="text" name="userName" id="userName" class="form-control input-sm" placeholder="Username" maxlength="50" />
                   </div>
               </div>
 
               <div class="control-group">
                 <label class="control-label"  for="password">Passwrod:</label>
                   <div class="controls">
-                    <input type="password" name="password" id="password" class="form-control input-sm" placeholder="Password" maxlength="50" required/>
+                    <input type="password" name="password" id="password" class="form-control input-sm" placeholder="Password" maxlength="50" />
                     <p>               </p>
                   </div>
               </div>
@@ -66,24 +74,24 @@ session_start();
             <h5 class="text-center"> Not a Member Yet.</h5>
             <a class="text-center" href="registration.php">
               <div class="centered">
-                <input type="submit" value="SignUp" name="SignUp" id="SignUp" class="btn btn-info"></input> </a>
+                <input type="submit" value="Signup" name="Signup" id="Signup" class="btn btn-info"></input> </a>
               </div>
           </div>
         </div>
       </form>
-      
+
 
       <?php
         if(isset($_POST["Login"]))
-          { 
+          {
             echo "I am in login";
-            
-            
+
+
             if($_SERVER["REQUEST_METHOD"]=="POST")
               {
                 echo "i am in post";
                 if(isset($_POST["userName"]))
-                  { 
+                  {
                     echo "i am in username";
                     $userName=$_POST["userName"];
                     $password=$_POST["password"];
@@ -102,10 +110,6 @@ session_start();
                   }
               }
           }
-         elseif (isset($_POST["SignUp"]))
-          {
-            header('Location: http://localhost/registration.php');       
-          } 
       ?>
     </div>
   </body>
