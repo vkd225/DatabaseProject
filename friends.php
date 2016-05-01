@@ -17,17 +17,48 @@ session_start();
 <html>
 <head>
 	<title> Friends </title>
+	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 </head>
-<body>
-	<h1>FRIENDS</h1>
-	<a href="profile.php">Profile</a>
-	<a href="settings.php">Settings</a>
-	<a href="search.php">Search</a>
-	<form id='friend' role='form' action='friends.php' method='post'>
-		<button type="submit" id="logout" name="logout">logout</button> 
+<body data-spy="scroll" data-target=".navbar" data-spy="affix" data-offset="50">
+	<div class="container">
+		<div class="page-header text-center">
+			<h1>Friends</h1>
+		</div>
+		<div class="row">
+			<nav class="navbar navbar-default">
+  				<div class="container-fluid">
+				    <div class="navbar-header">
+				      <a class="navbar-brand" href="profile.php">Techies</a>
+				    </div>
+				    <ul class="nav navbar-nav">
+				      <li><a href="profile.php">Profile</a></li>
+				      <li><a href="search.php">Search</a></li> 
+				      <li><a href="settings.php">Settings</a></li> 
+				    </ul>
+				    <ul class="nav navbar-nav navbar-right">
+				        <li><a href=""><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+				    </ul>
+				  </div>
+				</nav>
+		</div>
 			
-		<table>
-		<tr><h3> My friends </h3></tr>
+	<form id='friend' role='form' action='friends.php' method='post'>
+		<div class="panel panel-default">
+		<div class="panel-body">
+			<div class="row form-group">
+				<div class="col-sm-6">
+					<h3> My friends </h3>
+				</div>	
+				<div class="col-sm-6">
+					<h3>Friend requests</h3>
+				</div>
+			</div>	
+			<div class="table-responsive">		
+			<table class="table">
+				<tr>
+					<td>
 <?php
 	$userName=$_SESSION['user'];
 	$stmt1=pg_prepare($conn,"s","select * from sp_show_friend($1)");
@@ -40,30 +71,29 @@ session_start();
 				{
 					$_SESSION['friend']=$row[0];
 ?>
-				<tr>
-				<td><a href="friendsPage.php"><?php echo ($row[0]);?></a></td>
-
-			  	</tr>
+				<div class="row">
+					<div class="col-sm-1">
+						<a href="friendsPage.php"><?php echo ($row[0]);?></a>
+					</div>
+					<div class="col-sm-9">
+						
+					</div>
+				</div>	
 <?php	
 				}
 		}
 	else
 		{
-			echo "You dont have any friends.Hey we are still there for you.";
+			echo "You dont have any friends.";
 		}		   
 		  #	   
 	$SQL1=sprintf('DEALLOCATE "%s"',pg_escape_string($sqlname1));
 	pg_query($SQL1);
-?>
-		</table>
-	
-
-		<table>
-			<tr>
-				<td>
-				<h3>Friend requests</h3>
+?>	
+					</td>
+					<td>						
 <?php
-	$stmt2=pg_prepare($conn,"s","select * from friendship where user_name=$1 and status=2 ");
+	$stmt2=pg_prepare($conn,"s","select * from friendship where user_name=$1 or friend_id=$1 and status=2 ");
 	$sqlname2="s";
 	$result2=pg_execute($conn,"s",array("$userName"));
 	$rows2=pg_num_rows($result2);
@@ -72,17 +102,28 @@ session_start();
 		while ($row=pg_fetch_array($result2,NULL,PGSQL_NUM))
 			{
 ?>
-				<tr>
-					<td><input type="text" name="friendRequest" readonly="" value="<?php echo ($row[1]);?>"></input></td>
+				<div class="row">
+					<div class="col-sm-6">
+						<input type="text" class="form-control" name="friendRequest" readonly="" value="<?php echo ($row[1]);?>"></input>
+					</div>
+				</div>		
 <?php
 				if(isset($_POST['friendRequest']))
 					{
 						$friendId=$_POST['friendRequest'];
 					}
 ?>
-					<td><input type="submit" name="confirm" value="confirm"></input></td>
-					<td><input type="submit" name="delete" value="delete"></input></td>
-			  	</tr>
+				<div class="row">
+					<div class="col-sm-2">
+						<input type="submit" class="btn btn-success" name="confirm" value="confirm"></input>
+					</div>
+					<div class="col-sm-1">	
+						<input type="submit" class="btn btn-danger" name="delete" value="delete"></input>
+					</div>
+					<div class="col-sm-9">
+						
+					</div>	
+			  	</div>
 <?php	
 			}
 		}
@@ -94,9 +135,12 @@ session_start();
 	$SQL1=sprintf('DEALLOCATE "%s"',pg_escape_string($sqlname1));
 	pg_query($SQL1);
 ?>
-			
-
-		</table>			
+			</td>
+		</tr>	
+	</table>
+	</div>
+	</div>
+	</div>
 	</form>
 </body>
 </html>
