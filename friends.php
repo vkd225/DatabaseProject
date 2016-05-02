@@ -1,5 +1,12 @@
 <?php
 session_start();
+if (!isset($_SESSION["is_auth"])) 
+	{
+
+    	header("location: login.php");
+		exit;
+
+	}
 ?>
 <?php
    $host        = "host=pdc-amd01.poly.edu";
@@ -37,8 +44,14 @@ session_start();
 				      <li><a href="search.php">Search</a></li> 
 				      <li><a href="settings.php">Settings</a></li> 
 				    </ul>
+				    <form class="navbar-form navbar-left" role="search">
+				        <div class="form-group">
+				         	<input type="text" id="searchUser" class="form-control" placeholder="Search friends">
+				        </div>
+				        <button type="submit" id="searchButton" class="btn btn-default">Submit</button>
+				    </form>
 				    <ul class="nav navbar-nav navbar-right">
-				        <li><a href=""><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+				        <li><a href="logout.php"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
 				    </ul>
 				  </div>
 				</nav>
@@ -148,7 +161,7 @@ session_start();
 	if(isset($_POST["confirm"]))
 	{
 
-		$stmt2=pg_prepare($conn,"s","select sp_accept_friend_request($1,$2,$3)  ");
+		$stmt2=pg_prepare($conn,"s","select sp_accept_friend_request($1,$2,$3)");
 		$sqlname2="s";
 		pg_execute($conn,"s",array($userName,$friendId,1));
 		header('location: friends.php');

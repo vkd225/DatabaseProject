@@ -101,6 +101,7 @@ session_start();
                     if($rows>0)
                       {
                         $_SESSION['user'] = $userName;
+                        $_SESSION['is_auth']=True;
                         header('Location: http://localhost/profile.php');
                       }
                     else
