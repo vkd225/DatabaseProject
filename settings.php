@@ -75,6 +75,13 @@ if (!isset($_SESSION["is_auth"]))
 				      <li><a href="search.php">Search</a></li> 
 				      <li><a href="friends.php">Friends</a></li> 
 				    </ul>
+				    <form class="navbar-form navbar-left" method="Post" role="search">
+				        <div class="form-group">
+				         	<input type="text" id="searchUser" name="searchUser" class="form-control" placeholder="Search Users">
+				        </div>
+				        <button type="submit" id="searchButton" name="searchButton" class="btn btn-default">Submit</button>
+				    </form>
+				    
 				    <ul class="nav navbar-nav navbar-right">
 				        <li><a href="logout.php"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
 				    </ul>
@@ -141,7 +148,20 @@ if (!isset($_SESSION["is_auth"]))
 			$sqlname="s";
 			$result=pg_execute($conn,$sqlname,array($userName,$privacy));					
 		  			
-   		}	
+   		}
+   	if (isset($_POST["searchButton"])) 
+		{
+			echo "iam in search button";
+			if (isset($_POST["searchUser"]))
+				 {
+				# code...ec
+				 echo "i am in search user";
+			
+					$_SESSION["searchUser"]=$_POST["searchUser"];
+					header('location: searchuser.php');
+				}
+		}
+		
    		
    	
 ?>

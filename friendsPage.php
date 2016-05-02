@@ -40,24 +40,42 @@ if (!isset($_SESSION["is_auth"]))
 
 ?>
 <?php
+	if ($_SERVER['REQUEST_METHOD']=='POST')
+	    {
+			if (isset($_POST["searchButton"])) 
+				{
+					echo "iam in search button";
+					if (isset($_POST["searchUser"]))
+						 {
+						# code...ec
+						 echo "i am in search user";
+					
+							$_SESSION["searchUser"]=$_POST["searchUser"];
+							header('location: searchuser.php');
+						}
+				}
+		}		
+?>
+<?php
 if($_SERVER['REQUEST_METHOD']=='POST')
-		{
+		{	
 			$stmt8=pg_prepare($conn,"s","select * from sp_post_diary_entry($1)");
 			$sqlname8="s";
 			$result8=pg_execute($conn,"s",array("$friend"));
+
 			$rows8=pg_num_rows($result8);
 		  	if ($rows8>0)
 		   		{
 		   			while ($row=pg_fetch_array($result8,NULL,PGSQL_NUM))
-					{
-
+						{
+							
 							if (isset($_POST[$row[0]]))
 								{
-
+									
 									if (isset($_POST[$row[0]."comment"]))
 										{
 											$body1=$_POST[$row[0]."comment"];
-											$diaryentry_id=$row[0];
+											$diaryendivtry_id=$row[0];
 											$stmt7=pg_prepare($conn,"k","select sp_insert_user_diary_comment($1,$2,$3,$4)");
 											$sqlname7="k";
 									   		$result7=pg_execute($conn,"k",array($userName,$friend,$body1,$diaryentry_id));
@@ -67,7 +85,7 @@ if($_SERVER['REQUEST_METHOD']=='POST')
 				   						}
 				   					break;
 
-		   						}
+		   						}	
 		   				}
 
 		   		}
@@ -100,10 +118,17 @@ if($_SERVER['REQUEST_METHOD']=='POST')
 				    </div>
 				    <ul class="nav navbar-nav">
 				      <li><a href="profile.php">Profile</a></li>
-				      <li><a href="friends.php">Friends</a></li>
+				      <li><a href="friends.php">Friends</a></li> 
 				      <li><a href="settings.php">Settings</a></li>
-				      <li><a href="search.php">Search</a></li>
+				      <li><a href="search.php">Search</a></li> 
 				    </ul>
+				    <form class="navbar-form navbar-left" method="Post" role="search">
+				        <div class="form-group">
+				         	<input type="text" id="searchUser" name="searchUser" class="form-control" placeholder="Search Users">
+				        </div>
+				        <button type="submit" id="searchButton" name="searchButton" class="btn btn-default">Submit</button>
+				    </form>
+
 				    <ul class="nav navbar-nav navbar-right">
 				        <li><a href="logout.php"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
 				    </ul>
@@ -116,20 +141,20 @@ if($_SERVER['REQUEST_METHOD']=='POST')
 	<div class="panel panel-default">
 		<div class="panel-body">
 			<div class="row form-group">
-				<div class="col-sm-12">
-
+				<div class="col-sm-12">	
+			
 					<textarea class="form-control" readonly="" cols="50" rows="3"><?php echo($profile);?></textarea>
-				</div>
-
-
-
+				</div>		
+		
+		
+			
 				<div class="col-sm-1">
 					<h4>Comments</h4>
 				</div>
 				<div class="col-sm-11">
-
+					
 				</div>
-			</div>
+			</div>	
 <?php
 		$stmt2=pg_prepare($conn,"s","select * from sp_search_comments_by_commented_on($1)");
 		$sqlname2="s";
@@ -146,12 +171,12 @@ if($_SERVER['REQUEST_METHOD']=='POST')
 								<input type="text" class="form-control" name="commenter" readonly="" value="<?php echo ($row[0]);?>"></input>
 							</div>
 							<div class="col-sm-10">
-
+								
 							</div>
 						</div>
-						<div class="row">
+						<div class="row">	
 							<div class="col-sm-3">
-								<textarea readonly="" class="form-control" cols="50" rows="3" ><?php echo($row[1]);?> </textarea>
+								<textarea readonly="" class="form-control" cols="50" rows="3" ><?php echo($row[1]);?> </textarea> 
 							</div>
 							<div class="col-sm-9">
 								<input type="text" class="form-control" name="time_posted_comment" readonly="" value="<?php echo ($time_post);?>"></input>
@@ -165,7 +190,7 @@ if($_SERVER['REQUEST_METHOD']=='POST')
 		pg_query($SQL2);
 ?>
 
-
+		
 		<div class="row">
 			<div class="col-sm-3">
 				<textarea class="form-control" name="comment"></textarea>
@@ -193,7 +218,7 @@ if($_SERVER['REQUEST_METHOD']=='POST')
 		   		$result3=pg_execute($conn,"s",array($userName,$commenter,$Comment));
 		   		$SQL3=sprintf('DEALLOCATE "%s"',pg_escape_string($sqlname3));
 		   		pg_query($SQL3);
-		   		header("location:friendsPage.php");
+		   		header("location:profile.php");
 
 		   		}
 		   	}
@@ -222,15 +247,15 @@ if($_SERVER['REQUEST_METHOD']=='POST')
 							<input type="text" class="form-control" name="title_" readonly="" value="<?php echo ($row3[1]);?>"></input>
 						</div>
 					</div>
-					<div class="row">
+					<div class="row">	
 						<div class="col-sm-3">
-							<textarea class="form-control" readonly=""><?php echo($row3[2]);?> </textarea>
+							<textarea class="form-control" readonly=""><?php echo($row3[2]);?> </textarea> 
 						</div>
-
+					
 						<div class="col-sm-9">
 							<input type="text" class="form-control" name="time_posted_comment" readonly="" value="<?php echo ($time_post);?>"></input>
 						</div>
-					</div>
+					</div>	
 					<?php
 
 						$result4=pg_query("select * from sp_show_user_diary_comment_updated($row3[0])");
@@ -246,50 +271,50 @@ if($_SERVER['REQUEST_METHOD']=='POST')
 												<input type="text" class="form-control" name="commenter" readonly="" value="<?php echo ($row4[0]);?>"></input>
 											</div>
 										</div>
-										<div class="row">
+										<div class="row">	
 											<div class="col-sm-3">
 												<textarea readonly="" class="form-control"><?php echo($row4[1]);?> </textarea>
 											</div>
 											<div class="col-sm-9">
 												<input type="text" class="form-control" name="time_posted_comment" readonly="" value="<?php echo ($time_post);?>"></input>
 											</div>
-						  				</div>
-
+						  				</div>	
+									
 						<?php
 									}
-
+									
 							}
 						else
 							{
-						?>
+						?>		
 								<div class="row">
 									<div class="col-sm-12">
-										<label>No Comments</label>>
+										<label>No Comments</label>
 									</div>
 								</div>
 						<?php
-							}
-						?>
-
+							}	
+						?>	
+									
 				  	<div class="row">
 						<div class="col-sm-2">
 							<input type="text" class="form-control" name="<?php echo $row3[0]."comment";?>" id="diary_body_comment" placeholder="comment"/></input>
 						</div>
-					</div>
-					<div class="row">
+					</div>	
+					<div class="row">	
 						<div class="col-sm-1">
 							<input type="submit" class="btn btn-primary" name="<?php echo $row3[0]; ?>" value="diary_comment"></input>
 						</div>
 					</div>
-
+						
 <?php
-
+			
 		}
 	$SQL3=sprintf('DEALLOCATE "%s"',pg_escape_string($sqlname3));
-	pg_query($SQL3);
-
+	pg_query($SQL3); 
+	
 	}
-?>
+?> 
 </div>
 </div>
 </div>

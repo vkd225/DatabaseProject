@@ -44,11 +44,11 @@ if (!isset($_SESSION["is_auth"]))
 				      <li><a href="search.php">Search</a></li> 
 				      <li><a href="settings.php">Settings</a></li> 
 				    </ul>
-				    <form class="navbar-form navbar-left" role="search">
+				    <form class="navbar-form navbar-left" method="Post" role="search">
 				        <div class="form-group">
-				         	<input type="text" id="searchUser" class="form-control" placeholder="Search friends">
+				         	<input type="text" id="searchUser" name="searchUser" class="form-control" placeholder="Search Users">
 				        </div>
-				        <button type="submit" id="searchButton" class="btn btn-default">Submit</button>
+				        <button type="submit" id="searchButton" name="searchButton" class="btn btn-default">Submit</button>
 				    </form>
 				    <ul class="nav navbar-nav navbar-right">
 				        <li><a href="logout.php"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
@@ -106,7 +106,7 @@ if (!isset($_SESSION["is_auth"]))
 					</td>
 					<td>						
 <?php
-	$stmt2=pg_prepare($conn,"s","select * from friendship where user_name=$1 or friend_id=$1 and status=2 ");
+	$stmt2=pg_prepare($conn,"s","select * from friendship where status=2 and user_name=$1 or friend_id=$1  ");
 	$sqlname2="s";
 	$result2=pg_execute($conn,"s",array("$userName"));
 	$rows2=pg_num_rows($result2);
@@ -145,8 +145,8 @@ if (!isset($_SESSION["is_auth"]))
 			echo "You dont have any pending friend requests";
 		}		   
 		  #	   
-	$SQL1=sprintf('DEALLOCATE "%s"',pg_escape_string($sqlname1));
-	pg_query($SQL1);
+	$SQL2=sprintf('DEALLOCATE "%s"',pg_escape_string($sqlname2));
+	pg_query($SQL2);
 ?>
 			</td>
 		</tr>	
@@ -164,9 +164,10 @@ if (!isset($_SESSION["is_auth"]))
 		$stmt2=pg_prepare($conn,"s","select sp_accept_friend_request($1,$2,$3)");
 		$sqlname2="s";
 		pg_execute($conn,"s",array($userName,$friendId,1));
-		header('location: friends.php');
+		
 		$SQL1=sprintf('DEALLOCATE "%s"',pg_escape_string($sqlname2));
-		   pg_query($SQL1);
+		pg_query($SQL1);
+		header('location: friends.php');
 			
 	}
 	if (isset($_POST["delete"])) 
@@ -174,14 +175,22 @@ if (!isset($_SESSION["is_auth"]))
 		$stmt2=pg_prepare($conn,"s","select sp_delete_friend_request($1,$2)  ");
 		$sqlname2="s";
 		pg_execute($conn,"s",array($userName,$friendId));
-		header('location: friends.php');
+		
 		$SQL1=sprintf('DEALLOCATE "%s"',pg_escape_string($sqlname2));
-		   pg_query($SQL1);
+		pg_query($SQL1);
+		header('location: friends.php');
 	}
-	if (isset($_POST['logout'])) 
-	{
-		session_unset();
-		session_destroy();
-		header('location: login.php');
-	}
+	if (isset($_POST["searchButton"])) 
+		{
+			
+			if (isset($_POST["searchUser"]))
+				{
+					
+					$_SESSION['serachUser']=$_POST["searchUser"];
+					header('location: searchuser.php');
+				}
+		}
+
+
+	
 ?>

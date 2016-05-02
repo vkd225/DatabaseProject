@@ -84,15 +84,13 @@ session_start();
       <?php
         if(isset($_POST["Login"]))
           {
-            echo "I am in login";
-
-
+            
             if($_SERVER["REQUEST_METHOD"]=="POST")
               {
-                echo "i am in post";
+                
                 if(isset($_POST["userName"]))
                   {
-                    echo "i am in username";
+                    
                     $userName=$_POST["userName"];
                     $password=$_POST["password"];
                     $stmt=pg_prepare($conn,"verify_login","select * from users where user_name=$1 and password=$2");
