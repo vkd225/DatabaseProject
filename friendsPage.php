@@ -111,14 +111,14 @@ if($_SERVER['REQUEST_METHOD']=='POST')
 		<div class="panel-body">
 			<div class="row form-group">
 				<div class="col-sm-12">	
-			
-					<textarea class="form-control" readonly="" cols="50" rows="3"><?php echo($profile);?></textarea>
+					<h6>About Me:</h6>
+					<textarea class="form-control" readonly="" cols="50" rows="2" style="resize:none"><?php echo($profile);?></textarea>
 				</div>		
 		
 		
 			
 				<div class="col-sm-1">
-					<h4>Comments</h4>
+					<h4>Comments:</h4>
 				</div>
 				<div class="col-sm-11">
 					
@@ -137,18 +137,17 @@ if($_SERVER['REQUEST_METHOD']=='POST')
 ?>
 						<div class="row">
 							<div class="col-sm-2">
-								<input type="text" class="form-control" name="commenter" readonly="" value="<?php echo ($row[0]);?>"></input>
+								<b> <input type="text" class="form-control" name="commenter" readonly="" value="<?php echo ($row[0]);?>"></input> </b>
 							</div>
-							<div class="col-sm-10">
-								
-							</div>
-						</div>
-						<div class="row">	
-							<div class="col-sm-3">
-								<textarea readonly="" class="form-control" cols="50" rows="3" ><?php echo($row[1]);?> </textarea> 
-							</div>
-							<div class="col-sm-9">
-								<input type="text" class="form-control" name="time_posted_comment" readonly="" value="<?php echo ($time_post);?>"></input>
+							
+							<div class="row">	
+								<div class="col-sm-3">
+									<textarea readonly="" class="form-control" cols="50" rows="2" style="resize:none"><?php echo($row[1]);?></textarea>
+									<p>                </p> 
+								</div>
+								<div class="col-sm-3">
+									<small> <input type="text" class="form-control" name="time_posted_comment" readonly="" style="resize:none" value="<?php echo ($time_post);?>"></input> </small>
+								</div>
 							</div>
 						</div>
 
@@ -162,12 +161,14 @@ if($_SERVER['REQUEST_METHOD']=='POST')
 		
 		<div class="row">
 			<div class="col-sm-3">
-				<textarea class="form-control" name="comment"></textarea>
+				<textarea class="form-control" name="comment" style="resize:none"></textarea>
 			</div>
 			<div class="col-sm-9"></div>
 		</div>
 		<div class="row">
+			<p>            </p>
 			<div class="col-sm-1">
+
 				<input type="submit" class="btn btn-primary" name="comment_button" value="comment"></input>
 			</div>
 		</div>
@@ -212,17 +213,22 @@ if($_SERVER['REQUEST_METHOD']=='POST')
 					$time_post=date("Y-M-d(g:i a)",strtotime($row3[3]));
 ?>
 					<div class="row">
-						<div class="col-sm-3">
-							<input type="text" class="form-control" name="title_" readonly="" value="<?php echo ($row3[1]);?>"></input>
+						<div class="col-sm-2">
+							<h5>Title:</h5>
+							<b> <input type="text" class="form-control" name="title_" readonly="" value="<?php echo ($row3[1]);?>"></input> </b>
+							
 						</div>
-					</div>
-					<div class="row">	
-						<div class="col-sm-3">
-							<textarea class="form-control" readonly=""><?php echo($row3[2]);?> </textarea> 
-						</div>
-					
-						<div class="col-sm-9">
-							<input type="text" class="form-control" name="time_posted_comment" readonly="" value="<?php echo ($time_post);?>"></input>
+
+						<div class="row">
+							<div class="col-sm-3">
+								<h5>Body:</h5>
+								<textarea class="form-control" style="resize:none" readonly=""><?php echo($row3[2]);?> </textarea>	
+								<h5>Comments:</h5>
+							</div>
+							<div class="col-sm-3">
+								<h5>Time Posted:</h5>
+								<input type="text" class="form-control" name="time_posted_comment" readonly="" style="resize:none" value="<?php echo ($time_post);?>"></input>
+							</div>						
 						</div>
 					</div>	
 					<?php
@@ -235,20 +241,21 @@ if($_SERVER['REQUEST_METHOD']=='POST')
 									{
 										$time_post=date("Y-M-d(g:i a)",strtotime($row4[2]));
 					?>
+										
 										<div class="row">
 											<div class="col-sm-2">
-												<input type="text" class="form-control" name="commenter" readonly="" value="<?php echo ($row4[0]);?>"></input>
+												<b><input type="text" class="form-control" name="commenter" readonly="" style="resize:none" value="<?php echo ($row4[0]);?>"></input></b>
 											</div>
-										</div>
-										<div class="row">	
-											<div class="col-sm-3">
-												<textarea readonly="" class="form-control"><?php echo($row4[1]);?> </textarea>
+											<div class="row">	
+												<div class="col-sm-3">
+													<textarea readonly="" style="resize:none" class="form-control"><?php echo($row4[1]);?> </textarea>
+													<p>                </p>
+												</div>
+												<div class="col-sm-3">
+													<input type="text" class="form-control" name="time_posted_comment" readonly="" style="resize:none" value="<?php echo ($time_post);?>"></input>
+												</div>
 											</div>
-											<div class="col-sm-9">
-												<input type="text" class="form-control" name="time_posted_comment" readonly="" value="<?php echo ($time_post);?>"></input>
-											</div>
-						  				</div>	
-									
+						  				</div>										
 						<?php
 									}
 									
@@ -272,7 +279,7 @@ if($_SERVER['REQUEST_METHOD']=='POST')
 					</div>	
 					<div class="row">	
 						<div class="col-sm-1">
-							<input type="submit" class="btn btn-primary" name="<?php echo $row3[0]; ?>" value="diary_comment"></input>
+							<input type="submit" class="btn btn-primary" name="<?php echo $row3[0]; ?>" value="Comment"></input>
 						</div>
 					</div>
 						
