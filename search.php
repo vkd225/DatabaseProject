@@ -1,5 +1,12 @@
 <?php
 	session_start();
+	if (!isset($_SESSION["is_auth"])) 
+	{
+
+    	header("location: login.php");
+		exit;
+
+	}
 ?>
 <?php
    $host        = "host=pdc-amd01.poly.edu";
@@ -12,8 +19,7 @@
 	   {
 	      echo "Error : Unable to open database\n";
 	   }
-   #$userName=$_SESSION['user'];
-   	$userName='psk287';
+   	$userName=$_SESSION['user'];
 ?>
 
 <!DOCTYPE html>
@@ -40,7 +46,7 @@
 				      <li><a href="settings.php">Settings</a></li> 
 				    </ul>
 				    <ul class="nav navbar-nav navbar-right">
-				        <li><a href=""><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+				        <li><a href="logout.php"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
 				    </ul>
 				  </div>
 				</nav>
