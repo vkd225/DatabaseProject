@@ -53,8 +53,8 @@ session_start();
 				    </div>
 				    <ul class="nav navbar-nav">
 				      <li><a href="setings.php">Settings</a></li>
-				      <li><a href="search.php">Search</a></li> 
-				      <li><a href="friends.php">Friends</a></li> 
+				      <li><a href="search.php">Search</a></li>
+				      <li><a href="friends.php">Friends</a></li>
 				    </ul>
 				    <ul class="nav navbar-nav navbar-right">
 				        <li><a href=""><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
@@ -62,11 +62,11 @@ session_start();
 				  </div>
 				</nav>
 		</div>
-	
+
 
 <form method="post" action="profile.php">
 
-	
+
 		<div class="row">
 			<div class="col-sm-12">
 				<textarea  class="form-control" readonly=""><?php echo($profile);?></textarea>
@@ -176,64 +176,21 @@ session_start();
 			   	}
 		}
 ?>
-
 <?php
-
-	$stmt6=pg_prepare($conn,"s","select * from sp_post_diary_entry($1)");
-	$sqlname6="s";
-    $result6=pg_execute($conn,"s",array("$userName"));
-    $rows6=pg_num_rows($result6);
-    if ($rows6>0)
-	   {
-	   		while ($row=pg_fetch_array($result6,NULL,PGSQL_NUM))
-				{
-					$time_post=date("Y-M-d(g:i a)",strtotime($row[3]));
-?>
-					<div class="row">
-						<div class="col-sm-">
-							<input type="text" class="form-control" name="title_" readonly="" value="<?php echo ($row[1]);?>"></input>
-						</div>
-						<div class="col-sm-">
-							<textarea class="form-control" readonly=""><?php echo($row[2]);?> </textarea> 
-						</div>
-						<div class="col-sm-">
-							<input type="text" class="form-control" name="time_posted_comment" readonly="" value="<?php echo ($time_post);?>"></input>
-						</div>
-				  	</div>
-				  	<div class="row">
-						<div class="col-sm-">
-							<input type="text" class="form-control" name="<?php echo $row[0]."comment";?>" id="diary_body_comment" placeholder="comment"/></input>
-						</div>
-						<div class="col-sm-">
-							<input type="submit" name="<?php echo $row[0]; ?>" value="diary_comment"></input>
-						</div>
-					</div>
-						
-<?php
-				}
-		}
-	$SQL6=sprintf('DEALLOCATE "%s"',pg_escape_string($sqlname6));
-	pg_query($SQL6);
-
-
-
-
-
-	if($_SERVER['REQUEST_METHOD']=='POST')
-		{	
+if($_SERVER['REQUEST_METHOD']=='POST')
+		{
 			$stmt8=pg_prepare($conn,"s","select * from sp_post_diary_entry($1)");
 			$sqlname8="s";
 			$result8=pg_execute($conn,"s",array("$userName"));
-
 			$rows8=pg_num_rows($result8);
 		  	if ($rows8>0)
 		   		{
 		   			while ($row=pg_fetch_array($result8,NULL,PGSQL_NUM))
 						{
-							echo("i AM IN WHILE ");
+
 							if (isset($_POST[$row[0]]))
 								{
-									echo("i AM IN IF");
+
 									if (isset($_POST[$row[0]."comment"]))
 										{
 											$body1=$_POST[$row[0]."comment"];
@@ -243,11 +200,11 @@ session_start();
 									   		$result7=pg_execute($conn,"k",array($userName,$userName,$body1,$diaryentry_id));
 									   		$SQL7=sprintf('DEALLOCATE "%s"',pg_escape_string($sqlname7));
 				  						 	pg_query($SQL7);
-		   							#header("location:profile.php");
+		   									header("Location:profile.php");
 				   						}
 				   					break;
 
-		   						}	
+		   						}
 		   				}
 
 		   		}
@@ -257,29 +214,92 @@ session_start();
 			$SQL8=sprintf('DEALLOCATE "%s"',pg_escape_string($sqlname8));
 		    pg_query($SQL8);
 		}
-		
-		$stmt10=pg_prepare($conn,"s","select * from sp_show_user_diary_comment($1)");
-		$sqlname10="s";
-		$result10=pg_execute($conn,"s",array("$userName"));
-		$rows10=pg_num_rows($result10);
-		if ($rows10>0)
-		   {
-		    	while ($row=pg_fetch_array($result10,NULL,PGSQL_NUM))
-					{
-						$time_post=date("Y-M-d(g:i a)",strtotime($row[2]));
 ?>
-						<div class="row">
-							<div class="col-sm-"><input type="text" class="form-control" name="commenter" readonly="" value="<?php echo ($row[0]);?>"></input></div>
-							<div class="col-sm-"><textarea class="form-control" readonly=""><?php echo($row[1]);?> </textarea> </div>
-							<div class="col-sm-"><input type="text" class="form-control" name="time_posted_comment" readonly="" value="<?php echo ($time_post);?>"></input></div>
-		  				</div>
 <?php
-					}
-			}
-		$SQL10=sprintf('DEALLOCATE "%s"',pg_escape_string($sqlname10));
-		Pg_query($SQL10);
+$stmt3=pg_prepare($conn,"s","select * from sp_post_diary_entry($1)");
+	$sqlname3="s";
+    $result3=pg_execute($conn,"s",array("$userName"));
+    $rows3=pg_num_rows($result3);
+    if ($rows3>0)
+	   {
+	   		while ($row3=pg_fetch_array($result3,NULL,PGSQL_NUM))
+				{
+					$time_post=date("Y-M-d(g:i a)",strtotime($row3[3]));
 ?>
-	
+					<div class="row">
+						<div class="col-sm-3">
+							<input type="text" class="form-control" name="title_" readonly="" value="<?php echo ($row3[1]);?>"></input>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-sm-3">
+							<textarea class="form-control" readonly=""><?php echo($row3[2]);?> </textarea>
+						</div>
+
+						<div class="col-sm-9">
+							<input type="text" class="form-control" name="time_posted_comment" readonly="" value="<?php echo ($time_post);?>"></input>
+						</div>
+					</div>
+					<?php
+
+						$result4=pg_query("select * from sp_show_user_diary_comment_updated($row3[0])");
+						$rows4=pg_num_rows($result4);
+					    if ($rows4>0)
+						   {
+						   		while ($row4=pg_fetch_array($result4,NULL,PGSQL_NUM))
+									{
+										$time_post=date("Y-M-d(g:i a)",strtotime($row4[2]));
+					?>
+										<div class="row">
+											<div class="col-sm-2">
+												<input type="text" class="form-control" name="commenter" readonly="" value="<?php echo ($row4[0]);?>"></input>
+											</div>
+										</div>
+										<div class="row">
+											<div class="col-sm-3">
+												<textarea readonly="" class="form-control"><?php echo($row4[1]);?> </textarea>
+											</div>
+											<div class="col-sm-9">
+												<input type="text" class="form-control" name="time_posted_comment" readonly="" value="<?php echo ($time_post);?>"></input>
+											</div>
+						  				</div>
+
+						<?php
+									}
+
+							}
+						else
+							{
+						?>
+								<div class="row">
+									<div class="col-sm-12">
+										<label>No Comments</label>>
+									</div>
+								</div>
+						<?php
+							}
+						?>
+
+				  	<div class="row">
+						<div class="col-sm-2">
+							<input type="text" class="form-control" name="<?php echo $row3[0]."comment";?>" id="diary_body_comment" placeholder="comment"/></input>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-sm-1">
+							<input type="submit" class="btn btn-primary" name="<?php echo $row3[0]; ?>" value="diary_comment"></input>
+						</div>
+					</div>
+
+<?php
+
+		}
+	$SQL3=sprintf('DEALLOCATE "%s"',pg_escape_string($sqlname3));
+	pg_query($SQL3);
+
+	}
+?>
+
 </form>
 </body>
 </html>
