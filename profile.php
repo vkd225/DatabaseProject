@@ -1,12 +1,13 @@
 <?php
 session_start();
-if (!isset($_SESSION["is_auth"])) 
-	{
+#if (!isset($_SESSION["is_auth"])) 
+#	{
+#
+#   	header("location: login.php");
+#		exit;
 
-    	header("location: login.php");
-		exit;
 
-	}
+#	}
 
 ?>
 <?php
@@ -141,7 +142,7 @@ if (!isset($_SESSION["is_auth"]))
 			    <i class="glyphicon glyphicon-bell"></i>
 			  </a>
 			  
-			  <ul class="dropdown-menu notifications" role="menu" aria-labelledby="dLabel">
+			  <ul class="dropdown-menu notifications" role="menu" area-labelledby="dLabel">
 			    
 			    <div class="notification-heading"><h4 class="menu-title">Notifications</h4>
 			    </div>
@@ -267,7 +268,7 @@ if (!isset($_SESSION["is_auth"]))
 			<nav class="navbar navbar-default">
   				<div class="container-fluid">
 				    <div class="navbar-header">
-				      <a class="navbar-brand" href="profile.php">Techies</a>
+				      <a class="navbar-brand" href="profile.php"> Welcome to Techies</a>
 				    </div>
 				    <ul class="nav navbar-nav">
 				      <li><a href="setings.php">Settings</a></li>
@@ -294,7 +295,7 @@ if (!isset($_SESSION["is_auth"]))
 	
 		<div class="row">
 			<div class="col-sm-12">
-				<textarea  class="form-control" readonly=""><?php echo($profile);?></textarea>
+				<textarea  class="form-control" style="resize:none" readonly=""><?php echo($profile);?></textarea>
 			<div>
 		</div >
 		<div class="row">
@@ -303,13 +304,15 @@ if (!isset($_SESSION["is_auth"]))
 			</div>
 		</div>
 		<div class="row">
-			<div class="col-sm-">
-				<textarea class="form-control" name="comment"></textarea>
+			<div class="col-sm-7">
+				<textarea class="form-control" style="resize:none" name="comment"></textarea>
 			</div>
 		</div>
 		<div class="row">
-			<div class="col-sm-">
+			<div class="col-sm-6">
+				<p>				</p>
 				<input type="submit" name="comment_button" value="comment"></input>
+				<p>				</p>
 			</div>
 			</div>
 
@@ -325,15 +328,17 @@ if (!isset($_SESSION["is_auth"]))
 					$time_post=date("Y-M-d(g:i a)",strtotime($row[2]));
 ?>
 			<div class="row">
-				<div class="col-sm-">
-					<input type="text" class="form-control" name="commenter" readonly="" value="<?php echo ($row[0]);?>"></input>
+				<div class="col-sm-2">
+					<b><input type="text" class="form-control" name="commenter" readonly="" value="<?php echo ($row[0]);?>"></input></b>
 				</div>
-				<div class="col-sm-">
-					<textarea class="form-control" readonly=""><?php echo($row[1]);?> </textarea>
-				</div>
-				<div class="col-sm-">
-					<input type="text" class="form-control" name="time_posted_comment" readonly="" value="<?php echo ($time_post);?>"></input>
-				</div>
+					<div class="col-sm-3">
+						<textarea class="form-control" style="resize:none" readonly=""><?php echo($row[1]);?> </textarea>
+						<p>				</p>
+					</div>
+				
+					<div class="col-sm-2">
+						<small><input type="text" class="form-control" name="time_posted_comment" readonly="" value="<?php echo ($time_post);?>"></input></small>
+					</div>
 		  	</div>
 <?php
 				}
@@ -343,25 +348,29 @@ if (!isset($_SESSION["is_auth"]))
 ?>
         <!--The diary entry-->
 	        <div class="row">
-				<div class="col-sm-">
-					<h3>Diary entry</h3>
+				<div class="col-sm-3">
+					<h3>Diary Entry:</h3>
 				</div>
 			</div>
 			<div class="row">
-				<div class="col-sm-">
-					<input type="text" class="form-control" name="title" id="diary_title" placeholder="title" /></input>
+				<div class="col-sm-3">
+					<input type="text" class="form-control" name="title" id="diary_title" placeholder="Title of Diary Entry:" /></input>
+					<p>				</p>
 				</div>
 			</div>
 			<div class="row">
-				<div class="col-sm-">
-					<input type="text" class="form-control" name="body" id="diary_body" placeholder="body" /></input>
+				<div class="col-sm-6">
+					<input type="text" row ="3" class="form-control input-lg" name="body" id="diary_body" placeholder="Your Diary Entry !!!" /></input>
+					<p>				</p>
 				</div>
 			</div>
 			<div class="row">
-				<div class="col-sm-">
+				<div class="col-sm-1">
 					<input type="submit" name="post" value="post"></input>
+					<p>				</p>
 				</div>
 			</div>
+			<h4>Past Diary Entries:</h4>
 <?php
 	if($_SERVER['REQUEST_METHOD']=='POST')
 		{
@@ -415,22 +424,28 @@ if (!isset($_SESSION["is_auth"]))
 					$time_post=date("Y-M-d(g:i a)",strtotime($row[3]));
 ?>
 					<div class="row">
-						<div class="col-sm-">
+						<div class="col-sm-3">
+							<p>				</p>
 							<input type="text" class="form-control" name="title_" readonly="" value="<?php echo ($row[1]);?>"></input>
 						</div>
-						<div class="col-sm-">
-							<textarea class="form-control" readonly=""><?php echo($row[2]);?> </textarea> 
+						<div class="col-sm-4">
+							<p>				</p>
+							<textarea class="form-control" style="resize:none" readonly=""><?php echo($row[2]);?> </textarea> 
 						</div>
-						<div class="col-sm-">
-							<input type="text" class="form-control" name="time_posted_comment" readonly="" value="<?php echo ($time_post);?>"></input>
+						<div class="col-sm-2">
+							<p>				</p>
+							<small><input type="text" class="form-control" style="resize:none" name="time_posted_comment" readonly="" value="<?php echo ($time_post);?>"></input></small>
 						</div>
 				  	</div>
 				  	<div class="row">
-						<div class="col-sm-">
-							<input type="text" class="form-control" name="<?php echo $row[0]."comment";?>" id="diary_body_comment" placeholder="comment"/></input>
+						<div class="col-sm-3">
+							<input type="text" class="form-control" name="<?php echo $row[0]."comment";?>" id="diary_body_comment" placeholder="comment on it."/></input>
 						</div>
-						<div class="col-sm-">
-							<input type="submit" name="<?php echo $row[0]; ?>" value="diary_comment"></input>
+						<div class="row">
+							<div class="col-sm-2">
+								<p>				</p>
+								<input type="submit" name="<?php echo $row[0]; ?>" value="comment"></input>	
+							</div>
 						</div>
 					</div>
 						
@@ -493,10 +508,19 @@ if (!isset($_SESSION["is_auth"]))
 					{
 						$time_post=date("Y-M-d(g:i a)",strtotime($row[2]));
 ?>
-						<div class="row">
-							<div class="col-sm-"><input type="text" class="form-control" name="commenter" readonly="" value="<?php echo ($row[0]);?>"></input></div>
-							<div class="col-sm-"><textarea class="form-control" readonly=""><?php echo($row[1]);?> </textarea> </div>
-							<div class="col-sm-"><input type="text" class="form-control" name="time_posted_comment" readonly="" value="<?php echo ($time_post);?>"></input></div>
+		  				<div class="row">
+							<div class="col-sm-2">
+								<p>				</p>
+								<input type="text" class="form-control" name="commenter" readonly="" value="<?php echo ($row[0]);?>"></input>
+							</div>
+							<div class="col-sm-3">
+								<p>				</p>
+								<textarea class="form-control" style="resize:none" readonly=""><?php echo($row[1]);?> </textarea>
+							</div>
+							<div class="col-sm-2">
+								<p>				</p>
+								<input type="text" class="form-control" name="time_posted_comment" readonly="" value="<?php echo ($time_post);?>"></input>
+							</div>
 		  				</div>
 <?php
 					}
