@@ -195,11 +195,10 @@ session_start();
 								
 ?>			   
 							     <a class="content" href="#">
-							      
 							       <div class="notification-item">
-							        <h4 class="item-title"><?php echo $row[0]; ?></h4>
-							        <p class="item-info">changed his profile</p>
-							      </div>
+							        	<h4 class="item-title"><?php echo $row[0]; ?></h4>
+							        	<p class="item-info">changed his profile</p>
+							      	</div>
 							       
 							    </a>
 <?php
@@ -232,9 +231,9 @@ session_start();
 							     <a class="content" href="#">
 							      
 							       <div class="notification-item">
-							        <h4 class="item-title"><?php echo $row[0]; ?></h4>
-							        <p class="item-info">added a new diary entry</p>
-							      </div>
+							        	<h4 class="item-title"><?php echo $row[0]; ?></h4>
+							        	<p class="item-info">added a new diary entry</p>
+							      	</div>
 							       
 							    </a>
 <?php
@@ -268,7 +267,7 @@ session_start();
 			<nav class="navbar navbar-default">
   				<div class="container-fluid">
 				    <div class="navbar-header">
-				      <a class="navbar-brand" href="profile.php"> Welcome to Techies</a>
+				      <a class="navbar-brand" href="profile.php">Techies</a>
 				    </div>
 				    <ul class="nav navbar-nav">
 				      <li><a href="setings.php">Settings</a></li>
@@ -295,6 +294,7 @@ session_start();
 	
 		<div class="row">
 			<div class="col-sm-12">
+				<h4>My Profile:</h4>
 				<textarea  class="form-control" style="resize:none" readonly=""><?php echo($profile);?></textarea>
 			<div>
 		</div >
@@ -511,7 +511,7 @@ session_start();
 		  				<div class="row">
 							<div class="col-sm-2">
 								<p>				</p>
-								<input type="text" class="form-control" name="commenter" readonly="" value="<?php echo ($row[0]);?>"></input>
+								<b><input type="text" class="form-control" name="commenter" readonly="" value="<?php echo ($row[0]);?>"></input></b>
 							</div>
 							<div class="col-sm-3">
 								<p>				</p>
