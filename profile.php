@@ -409,6 +409,45 @@ session_start();
 				   		}
 			   	}
 		}
+if($_SERVER['REQUEST_METHOD']=='POST')
+        {
+            $stmt8=pg_prepare($conn,"s","select * from sp_post_diary_entry($1)");
+            $sqlname8="s";
+            $result8=pg_execute($conn,"s",array("$userName"));
+
+            $rows8=pg_num_rows($result8);
+            if ($rows8>0)
+                {
+                    while ($row=pg_fetch_array($result8,NULL,PGSQL_NUM))
+                        {
+
+                            if (isset($_POST[$row[0]]))
+                                {
+
+                                    if (isset($_POST[$row[0]."comment"]))
+                                        {
+                                            $body1=$_POST[$row[0]."comment"];
+                                            $diaryentry_id=$row[0];
+                                            $stmt7=pg_prepare($conn,"k","select * from sp_insert_user_diary_comment($1,$2,$3,$4)");
+                                            $sqlname7="k";
+                                            $result7=pg_execute($conn,"k",array($userName,$userName,$body1,$diaryentry_id));
+                                            $SQL7=sprintf('DEALLOCATE "%s"',pg_escape_string($sqlname7));
+                                            pg_query($SQL7);
+                                            header("<meta http-equiv='refresh' content='0;url=http://localhost/profile.php?a=1&b=2'>");
+                                        }
+                                    break;
+
+                                }
+                        }
+
+                }
+
+
+
+            $SQL8=sprintf('DEALLOCATE "%s"',pg_escape_string($sqlname8));
+            pg_query($SQL8);
+        }
+
 
 $stmt3=pg_prepare($conn,"s","select * from sp_post_diary_entry($1)");
     $sqlname3="s";

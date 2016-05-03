@@ -75,8 +75,8 @@ if($_SERVER['REQUEST_METHOD']=='POST')
 									if (isset($_POST[$row[0]."comment"]))
 										{
 											$body1=$_POST[$row[0]."comment"];
-											$diaryendivtry_id=$row[0];
-											$stmt7=pg_prepare($conn,"k","select sp_insert_user_diary_comment($1,$2,$3,$4)");
+											$diaryentry_id=$row[0];
+											$stmt7=pg_prepare($conn,"k","select * from sp_insert_user_diary_comment($1,$2,$3,$4)");
 											$sqlname7="k";
 									   		$result7=pg_execute($conn,"k",array($userName,$friend,$body1,$diaryentry_id));
 									   		$SQL7=sprintf('DEALLOCATE "%s"',pg_escape_string($sqlname7));
