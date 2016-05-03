@@ -74,7 +74,7 @@ $host        = "host=pdc-amd01.poly.edu";
 ?>
 				<div class="row">
 					<div class="col-sm-1">
-						<input type="submit"name="<?php echo $row[0]?>" style="background:none!important;border:none;padding:0!important;font: inherit; cursor: pointer" value="<?php echo $row[0]?>"></input>
+						<b><input type="submit"name="<?php echo $row[0]?>" style="background:none!important;border:none;padding:0!important;font: inherit; cursor: pointer" value="<?php echo $row[0]?>"></input></b>
 					</div>
 					<div class="col-sm-9">
 						
