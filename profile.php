@@ -305,6 +305,7 @@ session_start();
 				<div class="row">
 					<div class="col-sm-12">	
 						<textarea  class="form-control" style="resize:none" readonly=""><?php echo($profile);?></textarea>
+						<P>						</P>
 					</div>
 				</div>
 
@@ -331,7 +332,9 @@ session_start();
 				<div class="row">
 					<div class="col-sm-12">	
 						<textarea  class="form-control" name="addedprofile" style="resize:none" placeholder="Enter your profile here"></textarea>
+						<P>						</P>
 					</div>
+
 				</div>
 
 				
