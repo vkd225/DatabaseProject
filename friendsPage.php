@@ -22,7 +22,7 @@ if (!isset($_SESSION["is_auth"]))
     $userName=$_SESSION['user'];
     $friend=$_SESSION['friend'];
 	#profile from database
-	$stmt=pg_prepare($conn,"s","select profile from user_profile where user_name=$1");
+	$stmt=pg_prepare($conn,"s","select * from profile from user_profile where user_name=$1");
 	$sqlname="s";
 	$result=pg_execute($conn,$sqlname,array("$friend"));
 	$rows=pg_num_rows($result);
@@ -214,7 +214,7 @@ if($_SERVER['REQUEST_METHOD']=='POST')
 				$commenter=$userName;
 				$Comment=$_POST["comment"];
 
-				$stmt3=pg_prepare($conn,"s","select add_comment($1,$2,$3)");
+				$stmt3=pg_prepare($conn,"s","select * from add_comment($1,$2,$3)");
 				$sqlname3="s";
 		   		$result3=pg_execute($conn,"s",array($friend,$userName,$Comment));
 		   		$SQL3=sprintf('DEALLOCATE "%s"',pg_escape_string($sqlname3));
