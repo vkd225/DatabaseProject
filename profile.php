@@ -293,28 +293,25 @@ session_start();
 
 
 		<div class="row">
-			<div class="col-sm-12">
-				<h4>My Profile:</h4>
-				<textarea  class="form-control" style="resize:none" readonly=""><?php echo($profile);?></textarea>
-			<div>
-		</div >
-		<div class="row">
 			<div class="col-sm-2">
-				<h4>Profile Comment</h4>
+				<h4>My Profile:</h4>
+			</div>
+			<div class="col-sm-9">
+				
+			</div>
+			<div class="col-sm-1">
+				<a href="edit_profile.php">Edit Profile</a>
 			</div>
 		</div>
+				
 		<div class="row">
-			<div class="col-sm-7">
-				<textarea class="form-control" style="resize:none" name="comment"></textarea>
+			<div class="col-sm-12">	
+				<textarea  class="form-control" style="resize:none" readonly=""><?php echo($profile);?></textarea>
 			</div>
 		</div>
-		<div class="row">
-			<div class="col-sm-6">
-				<p>				</p>
-				<input type="submit" name="comment_button" value="comment"></input>
-				<p>				</p>
-			</div>
-			</div>
+
+		</form>
+		
 
 <?php
 	$stmt2=pg_prepare($conn,"s","select * from sp_search_comments_by_commented_on($1)");
@@ -345,7 +342,25 @@ session_start();
 			}
 	$SQL2=sprintf('DEALLOCATE "%s"',pg_escape_string($sqlname2));
 	pg_query($SQL2);
+
 ?>
+		<div class="row">
+			<div class="col-sm-2">
+				<h4>Profile Comment</h4>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-sm-7">
+				<textarea class="form-control" style="resize:none" name="comment"></textarea>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-sm-6">
+				<p>				</p>
+				<input type="submit" class="btn btn-primary" name="comment_button" value="comment"></input>
+				<p>				</p>
+			</div>
+		</div>
         <!--The diary entry-->
 	        <div class="row">
 				<div class="col-sm-3">
@@ -366,7 +381,7 @@ session_start();
 			</div>
 			<div class="row">
 				<div class="col-sm-1">
-					<input type="submit" name="post" value="post"></input>
+					<input type="submit" class="btn btn-primary" name="post" value="post"></input>
 					<p>				</p>
 				</div>
 			</div>
@@ -449,7 +464,7 @@ if($_SERVER['REQUEST_METHOD']=='POST')
         }
 
 
-$stmt3=pg_prepare($conn,"s","select * from sp_post_diary_entry($1)");
+	$stmt3=pg_prepare($conn,"s","select * from sp_post_diary_entry($1)");
     $sqlname3="s";
     $result3=pg_execute($conn,"s",array("$userName"));
     $rows3=pg_num_rows($result3);
@@ -476,9 +491,18 @@ $stmt3=pg_prepare($conn,"s","select * from sp_post_diary_entry($1)");
                                 <h5>Time Posted:</h5>
                                 <input type="text" class="form-control" name="time_posted_comment" readonly="" style="resize:none" value="<?php echo ($time_post);?>"></input>
                             </div>
+                            <form  method="Post">
+                            <div class="col-sm-2">
+                        		<input type="Submit" name="<?php echo $row3[0]."editdiarybutton";?>" style="background:none!important;border:none;padding:0!important;font: inherit; cursor: pointer" value="Edit " ></input>
+                        	</div>	
+                        	<div class="col-sm-2">
+                        	
+                        		<input type="Submit" name="<?php echo $row3[0]."deletebutton";?>" style="background:none!important;border:none;padding:0!important;font: inherit; cursor: pointer" value="Delete" ></input>
+                        	</form>	
+                        	</div>
                         </div>
                     </div>
-                    <?php
+<?php
 
                         $result4=pg_query("select * from sp_show_user_diary_comment_updated($row3[0])");
                         $rows4=pg_num_rows($result4);
@@ -512,7 +536,7 @@ $stmt3=pg_prepare($conn,"s","select * from sp_post_diary_entry($1)");
                         ?>
                                 <div class="row">
                                     <div class="col-sm-12">
-                                        <label>No Comments</label>>
+                                        <label>No Comments</label>
                                     </div>
                                 </div>
                         <?php
@@ -526,17 +550,77 @@ $stmt3=pg_prepare($conn,"s","select * from sp_post_diary_entry($1)");
                     </div>
                     <div class="row">
                         <div class="col-sm-1">
-                            <input type="submit" class="btn btn-primary" name="<?php echo $row3[0]; ?>" value="Comment"></input>
+                        <p>				</p>
+                            <input type="submit" class="btn btn-primary" name="<?php echo $row3[0]; ?>"  value="Comment"></input>
                         </div>
                     </div>
 
 <?php
 
-        }
+		        }
     $SQL3=sprintf('DEALLOCATE "%s"',pg_escape_string($sqlname3));
     pg_query($SQL3);
 
-    }
+    	}
+?>
+<?php
+		if($_SERVER['REQUEST_METHOD']=='POST')
+        {
+            $stmt10=pg_prepare($conn,"s","select * from sp_post_diary_entry($1)");
+            $sqlname10="s";
+            $result10=pg_execute($conn,"s",array("$userName"));
+
+            $rows10=pg_num_rows($result10);
+            if ($rows10>0)
+                {
+                    while ($row=pg_fetch_array($result10,NULL,PGSQL_NUM))
+                        {
+                        	
+                            if (isset($_POST[$row[0]."editdiarybutton"]))
+                                {	
+                                	$_SESSION['editdiaryid']=$row[0];
+                                	echo ("<meta http-equiv='refresh' content='0;url=http://localhost/edit_diary.php'>");
+                                }
+                        }
+
+                }
+
+
+
+            $SQL8=sprintf('DEALLOCATE "%s"',pg_escape_string($sqlname8));
+            pg_query($SQL8);
+        }
+
+?>
+<?php
+		if($_SERVER['REQUEST_METHOD']=='POST')
+        {
+            $stmt9=pg_prepare($conn,"s","select * from sp_post_diary_entry($1)");
+            $sqlname9="s";
+            $result9=pg_execute($conn,"s",array("$userName"));
+
+            $rows9=pg_num_rows($result9);
+            if ($rows9>0)
+                {
+                    while ($row=pg_fetch_array($result9,NULL,PGSQL_NUM))
+                        {
+                        	$deletediarybutton=$_POST[$row[0]."deletebutton"];
+                        	echo $deletediarybutton;
+                            if (isset($_POST[$row[0]."deletebutton"]))
+                                {	
+                                	$_SESSION['deltediaryid']=$row[0];
+                                	echo ("<meta http-equiv='refresh' content='0;url=http://localhost/deletediaryentry.php'>");
+                                }
+                        }
+
+                }
+
+
+
+            $SQL8=sprintf('DEALLOCATE "%s"',pg_escape_string($sqlname8));
+            pg_query($SQL8);
+        }
+
 ?>
 </form>
 </body>
