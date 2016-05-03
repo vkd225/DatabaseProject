@@ -61,7 +61,7 @@ $host        = "host=pdc-amd01.poly.edu";
 		<div class="panel panel-default">
 		<div class="panel-body">
 <?php
-	echo $keyword;
+	
 	$stmt1=pg_prepare($conn,"s","select * from sp_search_users($1)");
 	$sqlname1="s";
 	$result1=pg_execute($conn,"s",array("$keyword"));
@@ -74,12 +74,13 @@ $host        = "host=pdc-amd01.poly.edu";
 ?>
 				<div class="row">
 					<div class="col-sm-1">
-						<a href=""><?php echo ($row[0]);?></a>
+						<input type="submit"name="<?php echo $row[0]?>" style="background:none!important;border:none;padding:0!important;font: inherit; cursor: pointer" value="<?php echo $row[0]?>"></input>
 					</div>
 					<div class="col-sm-9">
 						
 					</div>
 				</div>	
+				<p>			</p>
 <?php	
 				}
 		}
@@ -92,17 +93,44 @@ $host        = "host=pdc-amd01.poly.edu";
 	pg_query($SQL1);
 	if (isset($_POST["searchButton"])) 
 			{
-				echo "iam in search button";
-				if (isset($_POST["searchUser"]))
-					 {
-					# code...ec
-					 echo "i am in search user";
 				
+				if (isset($_POST["searchUser"]))
+					{
+					# code...ec
+									
 						$_SESSION["searchUser"]=$_POST["searchUser"];
-						header('location: searchuser.php');
+						echo ("<meta http-equiv='refresh' content='0;url=http://localhost/searchuser.php'>");
 					}
 			}
-	
-?>	
+	if($_SERVER['REQUEST_METHOD']=='POST')
+		{
+			$stmt9=pg_prepare($conn,"s","select * from sp_search_users($1)");
+            $sqlname9="s";
+            $result9=pg_execute($conn,"s",array("$keyword"));
 
+            $rows9=pg_num_rows($result9);
+            if ($rows9>0)
+                {
+                    while ($row=pg_fetch_array($result9,NULL,PGSQL_NUM))
+                        {
+                        	
+                            if (isset($_POST[$row[0]]))
+                                {	
+                                	$_SESSION['searcheduser']=$row[0];
+                                	echo ("<meta http-equiv='refresh' content='0;url=http://localhost/searchuserpage.php'>");
+                                }
+                        }
+
+                }
+
+
+
+            $SQL8=sprintf('DEALLOCATE "%s"',pg_escape_string($sqlname8));
+            pg_query($SQL8);
+        }	
+				
+?>	
+</div>
+</div>
+</form>
 
