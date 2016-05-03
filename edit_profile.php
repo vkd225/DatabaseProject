@@ -291,24 +291,34 @@ session_start();
 
 <form method="post" action="edit_profile.php">
 
-
-        <div class="row">
-            <div class="col-sm-2">
-                <h4>My Profile:</h4>
-            </div>
-            <div class="col-sm-9">
+<?php
+    $stmt=pg_prepare($conn,"s","select profile from user_profile where user_name=$1");
+    $sqlname="s";
+    $result=pg_execute($conn,$sqlname,array("$userName"));
+    $rows=pg_num_rows($result);
+        if ($rows>0)
+            {
                 
-            </div>
-            <div class="col-sm-1">
-                <button name="editprofile" style="background:none!important;border:none;padding:0!important;font: inherit;cursor: pointer;" >Edit Profile</button>
-            </div>
-        </div>
-                
-        <div class="row">
-            <div class="col-sm-12"> 
-                <textarea  class="form-control" name="edittedprofile" style="resize:none" ><?php echo($profile);?></textarea>
-            </div>
-        </div>
+                $profile=pg_fetch_result($result, 0, 0);
+?>
+                <div class="row">
+                    <div class="col-sm-2">
+                        <h4>My Profile:</h4>
+                    </div>
+                    <div class="col-sm-9">
+                        
+                    </div>
+                    <div class="col-sm-1">
+                        <button name="editprofile" style="background:none!important;border:none;padding:0!important;font: inherit;cursor: pointer;" >Edit Profile</button>
+                    </div>
+                </div>
+                        
+                <div class="row">
+                    <div class="col-sm-12"> 
+                        <textarea  class="form-control" name="edittedprofile" style="resize:none" ><?php echo($profile);?></textarea>
+                    </div>
+                </div>
+            }
 <?php
         if (isset($_POST['editprofile']))
         {
@@ -337,7 +347,7 @@ session_start();
                 <input type="submit" name="comment_button" value="comment"></input>
                 <p>             </p>
             </div>
-            </div>
+        </div>
 
 <?php
     $stmt2=pg_prepare($conn,"s","select * from sp_search_comments_by_commented_on($1)");

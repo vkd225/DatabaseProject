@@ -84,14 +84,14 @@ if (!isset($_SESSION["is_auth"]))
 				{
 					$_SESSION['friend']=$row[0];
 ?>
-				<div class="row">
-					<div class="col-sm-1">
-						<a href="friendsPage.php"><?php echo ($row[0]);?></a>
-					</div>
-					<div class="col-sm-9">
-						
-					</div>
-				</div>	
+					<div class="row">
+						<div class="col-sm-3">
+							<input type="submit" style="background:none!important;border:none;padding:0!important;font: inherit;cursor: pointer;" name="<?php echo $row[0]."frindlink";?>" value="<?php echo ($row[0]);?>" ></input>
+						</div>
+						<div class="col-sm-9">
+							
+						</div>
+					</div>	
 <?php	
 				}
 		}
@@ -106,7 +106,7 @@ if (!isset($_SESSION["is_auth"]))
 					</td>
 					<td>						
 <?php
-	$stmt2=pg_prepare($conn,"s","select * from friendship where status=2 and user_name=$1 or friend_id=$1  ");
+	$stmt2=pg_prepare($conn,"s","  select * from sp_show_friend_request($1)");
 	$sqlname2="s";
 	$result2=pg_execute($conn,"s",array("$userName"));
 	$rows2=pg_num_rows($result2);
@@ -117,7 +117,7 @@ if (!isset($_SESSION["is_auth"]))
 ?>
 				<div class="row">
 					<div class="col-sm-6">
-						<input type="text" class="form-control" name="friendRequest" readonly="" value="<?php echo ($row[1]);?>"></input>
+						<input type="text" class="form-control" name="friendRequest" readonly="" value="<?php echo ($row[0]);?>"></input>
 					</div>
 				</div>		
 <?php
@@ -163,7 +163,7 @@ if (!isset($_SESSION["is_auth"]))
 
 		$stmt2=pg_prepare($conn,"s","select sp_accept_friend_request($1,$2,$3)");
 		$sqlname2="s";
-		pg_execute($conn,"s",array($userName,$friendId,1));
+		pg_execute($conn,"s",array($friendId,$userName,1));
 		
 		$SQL1=sprintf('DEALLOCATE "%s"',pg_escape_string($sqlname2));
 		pg_query($SQL1);
@@ -174,7 +174,7 @@ if (!isset($_SESSION["is_auth"]))
 	{
 		$stmt2=pg_prepare($conn,"s","select sp_delete_friend_request($1,$2)  ");
 		$sqlname2="s";
-		pg_execute($conn,"s",array($userName,$friendId));
+		pg_execute($conn,"s",array($friendId,$userName));
 		
 		$SQL1=sprintf('DEALLOCATE "%s"',pg_escape_string($sqlname2));
 		pg_query($SQL1);
@@ -190,6 +190,32 @@ if (!isset($_SESSION["is_auth"]))
 					header('location: searchuser.php');
 				}
 		}
+	if($_SERVER['REQUEST_METHOD']=='POST')
+		{
+			$stmt9=pg_prepare($conn,"s","select * from sp_show_friend($1)");
+            $sqlname9="s";
+            $result9=pg_execute($conn,"s",array("$userName"));
+
+            $rows9=pg_num_rows($result9);
+            if ($rows9>0)
+                {
+                    while ($row=pg_fetch_array($result9,NULL,PGSQL_NUM))
+                        {
+                        	
+                            if (isset($_POST[$row[0]."frindlink"]))
+                                {	
+                                	$_SESSION['friend']=$row[0];
+                                	echo ("<meta http-equiv='refresh' content='0;url=http://localhost/friendsPage.php'>");
+                                }
+                        }
+
+                }
+
+
+
+            $SQL9=sprintf('DEALLOCATE "%s"',pg_escape_string($sqlname9));
+            pg_query($SQL9);
+        }	
 
 
 	

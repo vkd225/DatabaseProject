@@ -23,21 +23,7 @@ session_start();
    		}
     $userName=$_SESSION['user'];
 		   #profile from database
-	$stmt=pg_prepare($conn,"s","select profile from user_profile where user_name=$1");
-	$sqlname="s";
-	$result=pg_execute($conn,$sqlname,array("$userName"));
-	$rows=pg_num_rows($result);
-		if ($rows>0)
-	 	    {
-		   	    echo "Welcome " . $userName;
-		   		$profile=pg_fetch_result($result, 0, 0);
-		    }
-		else if($rows=0)
-		    {
-		 	  	echo"No such record exists";
-		    }
-	$SQL=sprintf('DEALLOCATE "%s"',pg_escape_string($sqlname));
-	pg_query($SQL);
+
 ?>
 <?php
 		if($_SERVER['REQUEST_METHOD']=='POST')
@@ -137,9 +123,12 @@ session_start();
 </head>
 <body data-spy="scroll" data-target=".navbar" data-spy="affix" data-offset="50">
 	<div class="container">
+<?php
+	echo "Welcome " . $userName;
+?>
 	<div class="dropdown">
 			<a id="dLabel" role="button" data-toggle="dropdown" data-target="#" href="/page.html">
-			    <i class="glyphicon glyphicon-bell"></i>
+			    <i class="glyphicon glyphicon-bell">Notifications</i>
 			  </a>
 
 			  <ul class="dropdown-menu notifications" role="menu" area-labelledby="dLabel">
@@ -158,7 +147,7 @@ session_start();
 							{
 
 ?>
-							     <a class="content" href="friends">
+							     <a class="content" href="friends.php">
 
 							       <div class="notification-item">
 							        <h4 class="item-title"><?php echo $row[0]; ?></h4>
@@ -270,7 +259,7 @@ session_start();
 				      <a class="navbar-brand" href="profile.php">Techies</a>
 				    </div>
 				    <ul class="nav navbar-nav">
-				      <li><a href="setings.php">Settings</a></li>
+				      <li><a href="settings.php">Settings</a></li>
 				      <li><a href="search.php">Search</a></li>
 				      <li><a href="friends.php">Friends</a></li>
 				    </ul>
@@ -291,27 +280,78 @@ session_start();
 
 <form method="post" action="profile.php">
 
+<?php
+	$stmt=pg_prepare($conn,"s","select profile from user_profile where user_name=$1");
+	$sqlname="s";
+	$result=pg_execute($conn,$sqlname,array("$userName"));
+	$rows=pg_num_rows($result);
+		if ($rows>0)
+	 	    {
+		   	    
+		   		$profile=pg_fetch_result($result, 0, 0);
+?>
+				<div class="row">
+					<div class="col-sm-2">
+						<h4>My Profile:</h4>
+					</div>
+					<div class="col-sm-9">
+						
+					</div>
+					<div class="col-sm-1">
+						<a href="edit_profile.php">Edit Profile</a>
+					</div>
+				</div>
+						
+				<div class="row">
+					<div class="col-sm-12">	
+						<textarea  class="form-control" style="resize:none" readonly=""><?php echo($profile);?></textarea>
+					</div>
+				</div>
 
-		<div class="row">
-			<div class="col-sm-2">
-				<h4>My Profile:</h4>
-			</div>
-			<div class="col-sm-9">
 				
-			</div>
-			<div class="col-sm-1">
-				<a href="edit_profile.php">Edit Profile</a>
-			</div>
-		</div>
-				
-		<div class="row">
-			<div class="col-sm-12">	
-				<textarea  class="form-control" style="resize:none" readonly=""><?php echo($profile);?></textarea>
-			</div>
-		</div>
+<?php
+			}
+		else
+		    {
+		    	
+		 	  	
+?>		    	
+				<div class="row">
+					<div class="col-sm-2">
+						<h4>My Profile:</h4>
+					</div>
+					<div class="col-sm-8">
+						
+					</div>
+					<div class="col-sm-2 text-right">
+                        <button name="addprofile" style="background:none!important;border:none;padding:0!important;font: inherit;cursor: pointer;" >Add Profile</button>
+                    </div>
+				</div>
+						
+				<div class="row">
+					<div class="col-sm-12">	
+						<textarea  class="form-control" name="addedprofile" style="resize:none" placeholder="Enter your profile here"></textarea>
+					</div>
+				</div>
 
-		</form>
-		
+				
+<?php						    	
+		    	
+		    }
+	$SQL=sprintf('DEALLOCATE "%s"',pg_escape_string($sqlname));
+	pg_query($SQL);
+?>
+<?php
+		if (isset($_POST['addprofile']))
+        {
+            if (isset($_POST['addedprofile']))
+            {   
+                $body=$_POST['addedprofile'];
+                pg_query($conn,"select * from sp_insert_profile('$userName','$body')");
+                print "<meta http-equiv='refresh' content='0;url=profile.php'>";
+            }
+        }
+?>	
 
 <?php
 	$stmt2=pg_prepare($conn,"s","select * from sp_search_comments_by_commented_on($1)");
@@ -385,7 +425,7 @@ session_start();
 					<p>				</p>
 				</div>
 			</div>
-			<h4>Past Diary Entries:</h4>
+			
 <?php
 	if($_SERVER['REQUEST_METHOD']=='POST')
 		{
@@ -474,6 +514,7 @@ if($_SERVER['REQUEST_METHOD']=='POST')
                 {
                     $time_post=date("Y-M-d(g:i a)",strtotime($row3[3]));
 ?>
+					<h4>Past Diary Entries</h4>
                     <div class="row">
                         <div class="col-sm-2">
                             <h5>Title:</h5>
@@ -562,6 +603,17 @@ if($_SERVER['REQUEST_METHOD']=='POST')
     pg_query($SQL3);
 
     	}
+    else
+    	{
+?>
+			<div class="row">
+				<div class="col-sm-12">
+					<h5>No old diary Entries Post your first diary entry above</h5>
+				</div>
+			</div>
+ <?php   		
+    	}	
+
 ?>
 <?php
 		if($_SERVER['REQUEST_METHOD']=='POST')
