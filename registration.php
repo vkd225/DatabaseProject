@@ -90,7 +90,10 @@
 									   		{
 									   	    	echo "Error : Unable to open database\n";
 									   		}
-									    
+									    else
+									    	{
+									   		    echo "Opened database successfully\n";
+									  		}
 									   if($_SERVER["REQUEST_METHOD"]=="POST")
 									   		{
 										   		if(isset($_POST["UserName"]))
@@ -105,57 +108,38 @@
 													   		}
 													   else
 														   {
-
-											  				if(isset($_POST["password"]))
-																{
-																	if (isset($_POST["password_confirmation"]))
-																		{
-																			if (($_POST['password'])==($_POST['password_confirmation']))
-																			 	{
-																					$password=$_POST['password'];	
-																				
-														
-																    				if(isset($_POST["FirstName"]))
-																						{
-																							$firstName= $_POST["FirstName"];
-																						}
-																					if(isset($_POST["LastName"]))
-																						{
-																							$lastName= $_POST["LastName"];
-																						}
-																					if(isset($_POST["UserName"]))
-																						{
-																							$userName= $_POST["UserName"];
-																						}
-																					
-																					if(isset($_POST["Age"]))
-																						{
-																							$age= $_POST["Age"];
-																						}
-																					if(isset($_POST["City"]))
-																						{
-																							 $city= $_POST["City"];
-																							 
-																						}
-																						$Insert_query=pg_query($conn,"select * from sp_signup('$firstName','$lastName','$userName','$password','$age','$city','1')");
-																						$message = "You have been successfully registered. Your User name is ".$userName;
-																						echo "<script type='text/javascript'>alert('$message');</script>";
-											 											echo ("<meta http-equiv='refresh' content='0;url=http://localhost/login.php'>");
-													
-																				}
-																			else
-																				{
-																					$message = "Passwords dont match";
-																					echo "<script type='text/javascript'>alert('$message');</script>";
-																				}	
-																		}
-												
-									   							}
+											  					echo "hello";
+											    				if(isset($_POST["FirstName"]))
+																	{
+																		$firstName= $_POST["FirstName"];
+																	}
+																if(isset($_POST["LastName"]))
+																	{
+																		$lastName= $_POST["LastName"];
+																	}
+																if(isset($_POST["UserName"]))
+																	{
+																		$userName= $_POST["UserName"];
+																	}
+																if(isset($_POST["password"]))
+																	{
+																		$password= $_POST["password"];
+																	}
+																if(isset($_POST["Age"]))
+																	{
+																		$age= $_POST["Age"];
+																	}
+																if(isset($_POST["City"]))
+																	{
+																		 $city= $_POST["City"];
+																		 echo $city;
+																	}
 															}
 													}
-											}
-									}				
-
+												$Insert_query=pg_query($conn,"select * from sp_signup('$firstName','$lastName','$userName','$password','$age','$city','1')");
+											 	header('location: http://localhost/login.php');
+									   		}
+									}
 							?>
 				    	</div>
 		    		</div>

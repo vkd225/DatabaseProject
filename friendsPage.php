@@ -22,7 +22,7 @@ if (!isset($_SESSION["is_auth"]))
     $userName=$_SESSION['user'];
     $friend=$_SESSION['friend'];
 	#profile from database
-	$stmt=pg_prepare($conn,"s","select * from profile from user_profile where user_name=$1");
+	$stmt=pg_prepare($conn,"s","select profile from user_profile where user_name=$1");
 	$sqlname="s";
 	$result=pg_execute($conn,$sqlname,array("$friend"));
 	$rows=pg_num_rows($result);

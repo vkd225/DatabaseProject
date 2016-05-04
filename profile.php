@@ -287,7 +287,7 @@ session_start();
 	$rows=pg_num_rows($result);
 		if ($rows>0)
 	 	    {
-		   	    
+
 		   		$profile=pg_fetch_result($result, 0, 0);
 ?>
 				<div class="row">
@@ -295,51 +295,48 @@ session_start();
 						<h4>My Profile:</h4>
 					</div>
 					<div class="col-sm-9">
-						
+
 					</div>
 					<div class="col-sm-1">
 						<a href="edit_profile.php">Edit Profile</a>
 					</div>
 				</div>
-						
+
 				<div class="row">
-					<div class="col-sm-12">	
+					<div class="col-sm-12">
 						<textarea  class="form-control" style="resize:none" readonly=""><?php echo($profile);?></textarea>
-						<P>						</P>
 					</div>
 				</div>
 
-				
+
 <?php
 			}
 		else
 		    {
-		    	
-		 	  	
-?>		    	
+
+
+?>
 				<div class="row">
 					<div class="col-sm-2">
 						<h4>My Profile:</h4>
 					</div>
 					<div class="col-sm-8">
-						
+
 					</div>
 					<div class="col-sm-2 text-right">
                         <button name="addprofile" style="background:none!important;border:none;padding:0!important;font: inherit;cursor: pointer;" >Add Profile</button>
                     </div>
 				</div>
-						
-				<div class="row">
-					<div class="col-sm-12">	
-						<textarea  class="form-control" name="addedprofile" style="resize:none" placeholder="Enter your profile here"></textarea>
-						<P>						</P>
-					</div>
 
+				<div class="row">
+					<div class="col-sm-12">
+						<textarea  class="form-control" name="addedprofile" style="resize:none" placeholder="Enter your profile here"></textarea>
+					</div>
 				</div>
 
-				
-<?php						    	
-		    	
+
+<?php
+
 		    }
 	$SQL=sprintf('DEALLOCATE "%s"',pg_escape_string($sqlname));
 	pg_query($SQL);
@@ -348,13 +345,13 @@ session_start();
 		if (isset($_POST['addprofile']))
         {
             if (isset($_POST['addedprofile']))
-            {   
+            {
                 $body=$_POST['addedprofile'];
                 pg_query($conn,"select * from sp_insert_profile('$userName','$body')");
                 print "<meta http-equiv='refresh' content='0;url=profile.php'>";
             }
         }
-?>	
+?>
 
 <?php
 	$stmt2=pg_prepare($conn,"s","select * from sp_search_comments_by_commented_on($1)");
@@ -428,7 +425,7 @@ session_start();
 					<p>				</p>
 				</div>
 			</div>
-			
+
 <?php
 	if($_SERVER['REQUEST_METHOD']=='POST')
 		{
@@ -538,13 +535,13 @@ if($_SERVER['REQUEST_METHOD']=='POST')
                             <form  method="Post">
                             <div class="col-sm-2">
                         		<input type="Submit" name="<?php echo $row3[0]."editdiarybutton";?>" style="background:none!important;border:none;padding:0!important;font: inherit; cursor: pointer" value="Edit " ></input>
-                        	</div>	
-                        	<div class="col-sm-2">
-                        	
-                        		<input type="Submit" name="<?php echo $row3[0]."deletebutton";?>" style="background:none!important;border:none;padding:0!important;font: inherit; cursor: pointer" value="Delete" ></input>
-                        	</form>	
                         	</div>
-                        </div>
+                        	<div class="col-sm-2">
+
+                        		<input type="Submit" name="<?php echo $row3[0]."deletebutton";?>" style="background:none!important;border:none;padding:0!important;font: inherit; cursor: pointer" value="Delete" ></input>
+                        	</form>
+                        	</div
+                                                    </div>
                     </div>
 <?php
 
@@ -614,8 +611,8 @@ if($_SERVER['REQUEST_METHOD']=='POST')
 					<h5>No old diary Entries Post your first diary entry above</h5>
 				</div>
 			</div>
- <?php   		
-    	}	
+ <?php
+    	}
 
 ?>
 <?php
@@ -630,9 +627,9 @@ if($_SERVER['REQUEST_METHOD']=='POST')
                 {
                     while ($row=pg_fetch_array($result10,NULL,PGSQL_NUM))
                         {
-                        	
+
                             if (isset($_POST[$row[0]."editdiarybutton"]))
-                                {	
+                                {
                                 	$_SESSION['editdiaryid']=$row[0];
                                 	echo ("<meta http-equiv='refresh' content='0;url=http://localhost/edit_diary.php'>");
                                 }
@@ -662,7 +659,7 @@ if($_SERVER['REQUEST_METHOD']=='POST')
                         	$deletediarybutton=$_POST[$row[0]."deletebutton"];
                         	echo $deletediarybutton;
                             if (isset($_POST[$row[0]."deletebutton"]))
-                                {	
+                                {
                                 	$_SESSION['deltediaryid']=$row[0];
                                 	echo ("<meta http-equiv='refresh' content='0;url=http://localhost/deletediaryentry.php'>");
                                 }

@@ -87,7 +87,7 @@ if (!isset($_SESSION["is_auth"]))
                             <input type="text" id="searchUser" name="searchUser" class="form-control" placeholder="Search Users">
                         </div>
                         <button type="submit" id="searchButton" name="searchButton" class="btn btn-default">Submit</button>
-                        <button type="submit" id="add friend" name="addfriend" class="btn btn-primary">+ Add Friend</button>
+                        <button type="submit" id="addfriend" name="addfriend" class="btn btn-primary">+ Add Friend</button>
                     </form>
 
                     <ul class="nav navbar-nav navbar-right">
