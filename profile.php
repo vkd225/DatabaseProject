@@ -437,7 +437,7 @@ $privacyPublic="unchecked";
 				<input type="radio" name="Privacy" id="FriendsOfFriends" value="FriendsOfFriends" <?php print $privacyFOF;?> >Friends of Friends
 				</div>
 	  		</div>
-	  		
+
 	  	</div>
 
 			<div class="row">
@@ -463,7 +463,7 @@ $privacyPublic="unchecked";
 					   		$result3=pg_execute($conn,"s",array($userName,$commenter,$Comment));
 					   		$SQL3=sprintf('DEALLOCATE "%s"',pg_escape_string($sqlname3));
 					   		pg_query($SQL3);
-					   		header("location:profile.php");
+					   		echo ("<meta http-equiv='refresh' content='0;url=http://localhost/profile.php'>");
 
 				   		}
 			   	}
@@ -500,7 +500,7 @@ $privacyPublic="unchecked";
 					   		$result5=pg_execute($conn,"s",array($userName,$title,$body,$privacy));
 					   		$SQL5=sprintf('DEALLOCATE "%s"',pg_escape_string($sqlname5));
 					   		pg_query($SQL5);
-					   		header("<meta http-equiv='refresh' content='0;url=http://localhost/profile.php'>");
+					   		echo ("<meta http-equiv='refresh' content='0;url=http://localhost/profile.php'>");
 
 				   		}
 			   	}

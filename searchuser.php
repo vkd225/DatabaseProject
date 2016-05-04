@@ -121,7 +121,8 @@ $host        = "host=pdc-amd01.poly.edu";
                                 	$userName=$_SESSION['user'];
                                 	$result10=pg_query($conn,"select * from sp_show_friend('$userName')");
 			    					$rows10=pg_num_rows($result10);
-
+                                    $checkfriend=false;
+                                    $checkfof=false;
 						            if ($rows10>0)
 							            {
 							            	while($row=pg_fetch_array($result10,NULL,PGSQL_NUM))

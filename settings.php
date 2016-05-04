@@ -96,7 +96,7 @@ if (!isset($_SESSION["is_auth"]))
 		</div>
 
 	<form action="settings.php" method="Post">
-		
+
 	  		<div class="row">
 				    				<div class="col-xs-6 col-sm-6 col-md-6">
 				    					<div class="form-group">
@@ -194,36 +194,36 @@ if (!isset($_SESSION["is_auth"]))
 		   	if((isset($_POST["FirstName"]) and isset($_POST["LastName"]) and isset($_POST["UserName"])and isset($_POST["password"]) and isset($_POST["password_confirmation"]) and isset($_POST["Age"]) and isset($_POST["City"])))
 									{
 										$firstName= $_POST["FirstName"];
-									
+
 										$lastName= $_POST["LastName"];
-									
+
 										$userName= $_POST["UserName"];
-									
+
 
 										$password= $_POST["password"];
-									
+
 										$confirmpassword= $_POST["password_confirmation"];
-									
+
 										$age= $_POST["Age"];
-									
+
 										$city= $_POST["City"];
-										 
-									
+
+
 											if (!($password==$confirmpassword))
 												{
 													$message = "Passwords dont match" ;
-													echo "<script type='text/javascript'>alert('$message');</script>";	
-												}	
+													echo "<script type='text/javascript'>alert('$message');</script>";
+												}
 											else
 												{
-													
+
 										   			$Insert_query=pg_query($conn,"select * from sp_update_user('$userName','$firstName','$lastName','$password','$age','$city','$privacy')");
    													$message = "You have successfully updated you profile";
    													echo "<script type='text/javascript'>alert('$message');</script>";
    													echo "<meta http-equiv='refresh' content='0;url=http://localhost/settings.php'>";
-													
+
 												}
-									}	
+									}
 
 
    		}
@@ -236,7 +236,7 @@ if (!isset($_SESSION["is_auth"]))
 				 echo "i am in search user";
 
 					$_SESSION["searchUser"]=$_POST["searchUser"];
-					header('location: searchuser.php');
+					echo "<meta http-equiv='refresh' content='0;url=http://localhost/searchuser.php'>";
 				}
 		}
 
