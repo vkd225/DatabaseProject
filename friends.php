@@ -163,7 +163,7 @@ if (!isset($_SESSION["is_auth"]))
 
 		$stmt2=pg_prepare($conn,"s","select sp_accept_friend_request($1,$2,$3)");
 		$sqlname2="s";
-		pg_execute($conn,"s",array($userName,$friendId,1));
+		pg_execute($conn,"s",array($friendId,$userName,1));
 		
 		$SQL1=sprintf('DEALLOCATE "%s"',pg_escape_string($sqlname2));
 		pg_query($SQL1);
@@ -174,7 +174,7 @@ if (!isset($_SESSION["is_auth"]))
 	{
 		$stmt2=pg_prepare($conn,"s","select sp_delete_friend_request($1,$2)  ");
 		$sqlname2="s";
-		pg_execute($conn,"s",array($userName,$friendId));
+		pg_execute($conn,"s",array($friendId,$userName));
 		
 		$SQL1=sprintf('DEALLOCATE "%s"',pg_escape_string($sqlname2));
 		pg_query($SQL1);
