@@ -21,7 +21,7 @@ if (!isset($_SESSION["is_auth"]))
         }
     $userName=$_SESSION['user'];
     $friend=$_SESSION['searcheduser'];
-?>
+    ?>
 <?php
 #if the searched user is not a friend
     $stmt1=pg_prepare($conn,"s","select privacy from users where user_name=$1");
@@ -30,7 +30,7 @@ if (!isset($_SESSION["is_auth"]))
     $rows1=pg_num_rows($result1);
         if ($rows1>0)
             {
-                $privacy=pg_fetch_array($result1,0,PGSQL_NUM);
+                $privacy=pg_fetch_result($result1,0,0);
                 if($privacy==3 )
                     {
                         $stmt=pg_prepare($conn,"m","select profile from user_profile where user_name=$1");
@@ -42,16 +42,16 @@ if (!isset($_SESSION["is_auth"]))
                                 echo "This page belongs to  " . $friend ;
                                 $profile=pg_fetch_result($result, 0, 0);
                            }
-                        else if($rows=0)
+                        else 
                            {
-                                echo"No such record exists";
+                                $profile=$friend. " has created a Profile";
                            }
                         $SQL=sprintf('DEALLOCATE "%s"',pg_escape_string($sqlname));
                         pg_query($SQL);
                     }
                 else
                     {
-                        $profile="The profile is private";
+                        $profile="The profile is not public";
                     }
             }
     $SQL1=sprintf('DEALLOCATE "%s"',pg_escape_string($sqlname1));

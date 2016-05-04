@@ -21,6 +21,7 @@ if (!isset($_SESSION["is_auth"]))
         }
     $userName=$_SESSION['user'];
     $friend=$_SESSION['searcheduser'];
+    echo $friend;
 ?>
 <?php
 #if the searched user is friend of friend
@@ -30,7 +31,8 @@ if (!isset($_SESSION["is_auth"]))
     $rows1=pg_num_rows($result1);
         if ($rows1>0)
             {
-                $privacy=pg_fetch_array($result1,0,PGSQL_NUM);
+                
+                $privacy=pg_fetch_result($result1,0,0);
                 if($privacy==1)
                     {
                         $stmt=pg_prepare($conn,"m","select profile from user_profile where user_name=$1");
@@ -42,9 +44,9 @@ if (!isset($_SESSION["is_auth"]))
                                 echo "This page belongs to  " . $friend ;
                                 $profile=pg_fetch_result($result, 0, 0);
                            }
-                        else if($rows=0)
+                        else 
                            {
-                                echo"No such record exists";
+                                $profile=$friend. "has not created a profile";
                            }
                         $SQL=sprintf('DEALLOCATE "%s"',pg_escape_string($sqlname));
                         pg_query($SQL);
