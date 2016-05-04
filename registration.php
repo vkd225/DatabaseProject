@@ -78,69 +78,74 @@
 				    			</div>
 				    			<input type="submit" value="Signup" name="Signup" id="Signup" class="btn btn-info btn-block"></input>
 				    		</form>
-				    		<?php
-							 	if(isset($_POST["Signup"]))
-							   		{
-									   $host        = "host=pdc-amd01.poly.edu";
-									   $port        = "port=5432";
-									   $dbname      = "dbname=ku336";
-									   $credentials = "user=ku336 password=e0eycb7p";
-									   $conn = pg_connect( "$host $port $dbname $credentials"  );
-									   if(!$conn)
-									   		{
-									   	    	echo "Error : Unable to open database\n";
-									   		}
-									    else
-									    	{
-									   		    echo "Opened database successfully\n";
-									  		}
-									   if($_SERVER["REQUEST_METHOD"]=="POST")
-									   		{
-										   		if(isset($_POST["UserName"]))
-										   			{
-													   $userName=$_POST["UserName"];
-													   $stmt=pg_prepare($conn,"s","select user_name from users where user_name=$1");
-													   $result=pg_execute($conn,"s",array("$userName"));
-													   $rows=pg_num_rows($result);
-													   if($rows>0)
-													   		{
-														  	 	echo"User name already exists , Please choose a different user name";
-													   		}
-													   else
-														   {
-											  					echo "hello";
-											    				if(isset($_POST["FirstName"]))
-																	{
-																		$firstName= $_POST["FirstName"];
-																	}
-																if(isset($_POST["LastName"]))
-																	{
-																		$lastName= $_POST["LastName"];
-																	}
-																if(isset($_POST["UserName"]))
-																	{
-																		$userName= $_POST["UserName"];
-																	}
-																if(isset($_POST["password"]))
-																	{
-																		$password= $_POST["password"];
-																	}
-																if(isset($_POST["Age"]))
-																	{
-																		$age= $_POST["Age"];
-																	}
-																if(isset($_POST["City"]))
-																	{
-																		 $city= $_POST["City"];
-																		 echo $city;
-																	}
-															}
-													}
-												$Insert_query=pg_query($conn,"select * from sp_signup('$firstName','$lastName','$userName','$password','$age','$city','1')");
-											 	header('location: http://localhost/login.php');
-									   		}
+<?php
+	
+	   $host        = "host=pdc-amd01.poly.edu";
+	   $port        = "port=5432";
+	   $dbname      = "dbname=ku336";
+	   $credentials = "user=ku336 password=e0eycb7p";
+	   $conn = pg_connect( "$host $port $dbname $credentials"  );
+	   if(!$conn)
+	   		{
+	   	    	echo "Error : Unable to open database\n";
+	   		}
+	    
+	   if($_SERVER["REQUEST_METHOD"]=="POST")
+	   		{
+	   		if(isset($_POST["Signup"]))
+					{
+		   		if(isset($_POST["UserName"]))
+		   			{
+					   $userName=$_POST["UserName"];
+					   $stmt=pg_prepare($conn,"s","select user_name from users where user_name=$1");
+					   $result=pg_execute($conn,"s",array("$userName"));
+					   $rows=pg_num_rows($result);
+					   if($rows>0)
+					   		{
+					   			$message="Username already exists Please choose a different user name";	
+						  	 	echo "<script type='text/javascript'>alert('$message');</script>";
+						  	 	#echo "<meta http-equiv='refresh' content='0;url=http://localhost/login.php'>";
+					   		}
+					   else
+						   {
+			  					
+			    				if((isset($_POST["FirstName"]) and isset($_POST["LastName"]) and isset($_POST["UserName"])and isset($_POST["password"]) and isset($_POST["password_confirmation"]) and isset($_POST["Age"]) and isset($_POST["City"])))
+									{
+										$firstName= $_POST["FirstName"];
+									
+										$lastName= $_POST["LastName"];
+									
+										$userName= $_POST["UserName"];
+									
+
+										$password= $_POST["password"];
+									
+										$confirmpassword= $_POST["password_confirmation"];
+									
+										$age= $_POST["Age"];
+									
+										$city= $_POST["City"];
+										 
+									
+											if (!($password==$confirmpassword))
+												{
+													$message = "Passwords dont match" ;
+													echo "<script type='text/javascript'>alert('$message');</script>";	
+												}	
+											else
+												{
+													$Insert_query=pg_query($conn,"select * from sp_signup('$firstName','$lastName','$userName','$password','$age','$city','1')");
+													$message = "You have successfully registered . Your username is ".$userName ;
+													echo "<script type='text/javascript'>alert('$message');</script>";
+													echo "<meta http-equiv='refresh' content='0;url=http://localhost/login.php'>";
+												}
 									}
-							?>
+							}
+				
+		   			}
+			}
+}			
+?>
 				    	</div>
 		    		</div>
 	    		</div>

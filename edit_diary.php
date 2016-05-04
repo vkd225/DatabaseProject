@@ -474,7 +474,7 @@ if($_SERVER['REQUEST_METHOD']=='POST')
                                             $result7=pg_execute($conn,"k",array($userName,$userName,$body1,$diaryentry_id));
                                             $SQL7=sprintf('DEALLOCATE "%s"',pg_escape_string($sqlname7));
                                             pg_query($SQL7);
-                                            header("<meta http-equiv='refresh' content='0;url=http://localhost/profile.php?a=1&b=2'>");
+                                            echo "<meta http-equiv='refresh' content='0;url=http://localhost/profile.php'>";
                                         }
                                     break;
 
