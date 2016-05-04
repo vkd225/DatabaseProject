@@ -78,6 +78,13 @@
 				    			</div>
 				    			<input type="submit" value="Signup" name="Signup" id="Signup" class="btn btn-info btn-block"></input>
 				    		</form>
+
+				    		
+
+
+
+
+
 <?php
 	
 	   $host        = "host=pdc-amd01.poly.edu";
@@ -150,6 +157,13 @@
 		    		</div>
 	    		</div>
 	    	</form>
+	    	<div class="row">
+				<div class="col-sm-12 text-center">
+				    <h3>Already a Member</h3>
+				    <input type="submit" value="Login" name="Login" id="Login" class="btn btn-info btn-Primary"></input>
+				    <p>					</p>
+				    <p>					</p>
+			</div>
     	</div>
     </div>
 </body>
