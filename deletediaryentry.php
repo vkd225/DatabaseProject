@@ -12,7 +12,7 @@ $host        = "host=pdc-amd01.poly.edu";
         }
  $id=$_SESSION['deltediaryid'];
 
-		
+		pg_query("delete from comments_diaryentry where diaryentry_id='$id'");
 		pg_query("select * from sp_delete_diary_entry('$id')");	
 		unset($_SESSION['deltediaryid']);
 		header("Location: profile.php");
