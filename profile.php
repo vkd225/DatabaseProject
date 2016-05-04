@@ -8,7 +8,9 @@ session_start();
 
 
 #	}
-
+$privacyPublic="unchecked";
+	$privacyFriend="unchecked";
+	$privacyFOF="unchecked";
 ?>
 <?php
 	$host        = "host=pdc-amd01.poly.edu";
@@ -419,6 +421,25 @@ session_start();
 					<p>				</p>
 				</div>
 			</div>
+			<div class="radio">
+			<div class="row ">
+				<div class="col-sm-3">
+					<input type="radio"  name="Privacy" id="Public" value="Public" <?php echo $privacyPublic;?>> Public
+				</div>
+	  		</div>
+	  		<div class="row">
+	  			<div class="col-sm-3">
+	  				<input type="radio" name="Privacy" id="Friends" value="Friends" <?php print $privacyFriend;?>> Friends
+	  			</div>
+			</div>
+			<div class="row">
+				<div class="col-sm-3">
+				<input type="radio" name="Privacy" id="FriendsOfFriends" value="FriendsOfFriends" <?php print $privacyFOF;?> >Friends of Friends
+				</div>
+	  		</div>
+	  		
+	  	</div>
+
 			<div class="row">
 				<div class="col-sm-1">
 					<input type="submit" class="btn btn-primary" name="post" value="post"></input>
@@ -453,13 +474,33 @@ session_start();
 						{
 							$body=$_POST["body"];
 							$title=$_POST["title"];
+							$selectedPrivacy=$_POST["Privacy"];
 
-							$stmt5=pg_prepare($conn,"s","select sp_insert_user_diary($1,$2,$3)");
+				   			if($selectedPrivacy=="Public")
+						   		{
+						   			$privacyPublic='checked';
+						   			$privacy=3;
+
+						   					   		}
+					  	 	if($selectedPrivacy=="Friends")
+						   		{
+						   			$privacyFriend='checked';
+						   			$privacy=2;
+						   		}
+					   		if($selectedPrivacy=="FriendsOfFriends")
+						   		{
+						   			$privacyFOF='checked';
+						   			$privacy=1;
+
+						   		}
+
+
+							$stmt5=pg_prepare($conn,"s","select sp_insert_user_diary($1,$2,$3,$4)");
 							$sqlname5="s";
-					   		$result5=pg_execute($conn,"s",array($userName,$title,$body));
+					   		$result5=pg_execute($conn,"s",array($userName,$title,$body,$privacy));
 					   		$SQL5=sprintf('DEALLOCATE "%s"',pg_escape_string($sqlname5));
 					   		pg_query($SQL5);
-					   		header("location:profile.php");
+					   		header("<meta http-equiv='refresh' content='0;url=http://localhost/profile.php'>");
 
 				   		}
 			   	}
@@ -488,7 +529,7 @@ if($_SERVER['REQUEST_METHOD']=='POST')
                                             $result7=pg_execute($conn,"k",array($userName,$userName,$body1,$diaryentry_id));
                                             $SQL7=sprintf('DEALLOCATE "%s"',pg_escape_string($sqlname7));
                                             pg_query($SQL7);
-                                            header("<meta http-equiv='refresh' content='0;url=http://localhost/profile.php?a=1&b=2'>");
+                                            header("<meta http-equiv='refresh' content='0;url=http://localhost/profile.php'>");
                                         }
                                     break;
 

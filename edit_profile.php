@@ -274,6 +274,7 @@ session_start();
                 <textarea  class="form-control" name="edittedprofile" style="resize:none" ><?php echo($profile);?></textarea>
             </div>
         </div>
+        
 <?php
         if (isset($_POST['editprofile']))
         {
