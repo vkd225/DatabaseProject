@@ -141,7 +141,7 @@ $privacyPublic="unchecked";
 			   <div class="notifications-wrapper">
 <?php
 
-			    $result13=pg_query($conn,"select * from sp_check_new_profile_friends('$userName')");
+			    $result13=pg_query($conn,"select * from sp_check_new_friend_request('$userName')");
 			    $rows13=pg_num_rows($result13);
 			    if ($rows13>0)
 				   {
