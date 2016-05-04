@@ -157,6 +157,10 @@ if (!isset($_SESSION["is_auth"]))
                                             <textarea class="form-control" style="resize:none" readonly=""><?php echo($row3[2]);?> </textarea>
                                         </div>
                                     </div>
+                                    <div class="col-sm-3">
+                                        <h5>Time Posted:</h5>
+                                        <input type="text" class="form-control" name="time_posted_comment" readonly="" style="resize:none" value="<?php echo ($row3[3]);?>"></input>
+                                    </div>
                                 </div>
 <?php
                             }
