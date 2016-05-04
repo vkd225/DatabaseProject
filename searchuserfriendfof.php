@@ -109,8 +109,8 @@ if (!isset($_SESSION["is_auth"]))
 
         <!--The diary entry-->
         <div class="row">
-            <div class="col-sm-2">
-                <h4>Diary Entries</h4>
+            <div class="col-sm-2" >
+                <h4>Diary Entries:</h4>
             </div>
         </div>
 <?php
@@ -130,6 +130,7 @@ if (!isset($_SESSION["is_auth"]))
                                     <div class="col-sm-2">
                                         <h5>Title:</h5>
                                         <b> <input type="text" class="form-control" name="title_" readonly="" value="<?php echo ($row3[1]);?>"></input> </b>
+                                        <p>             </p>
 
                                     </div>
 
@@ -137,6 +138,7 @@ if (!isset($_SESSION["is_auth"]))
                                         <div class="col-sm-3">
                                             <h5>Body:</h5>
                                             <textarea class="form-control" style="resize:none" readonly=""><?php echo($row3[2]);?> </textarea>
+                                            <p>             </p>
                                         </div>
                                     </div>
                                 </div>
@@ -146,8 +148,8 @@ if (!isset($_SESSION["is_auth"]))
                         {
                             ?>
                             <div class="row">
-                                    <div class="col-sm-2">
-                                        <b> <textarea class="form-control" readonly="" cols="50" rows="2" style="resize:none">This diary entry is private</textarea> </b>
+                                    <div class="col-sm-6">
+                                        <b> <textarea class="form-control" readonly="" cols="50" rows="2" style="resize:none">This diary entry is private.</textarea> </b>
                                         <p>             </p>
                                     </div>
                             </div>
