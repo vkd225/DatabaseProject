@@ -86,8 +86,8 @@ if (!isset($_SESSION["is_auth"]))
                         <div class="form-group">
                             <input type="text" id="searchUser" name="searchUser" class="form-control" placeholder="Search Users">
                         </div>
-                        <button type="submit" id="searchButton" name="searchButton" class="btn btn-default">Submit</button>
-                        <button type="submit" id="add friend" name="addfriend" class="btn btn-primary">+ Add Friend</button>
+                        <input type="submit" id="searchButton" name="searchButton" class="btn btn-default" value="Submit"></input>
+                        <input type="submit" id="addfriend" name="addfriend" class="btn btn-primary" value="+ Add friend"></input>
                     </form>
 
                     <ul class="nav navbar-nav navbar-right">
@@ -158,6 +158,16 @@ if (!isset($_SESSION["is_auth"]))
     else echo"The user has no diary entry";
     $SQL3=sprintf('DEALLOCATE "%s"',pg_escape_string($sqlname3));
     pg_query($SQL3);
+?>
+<?php
+    
+        if (isset($_POST['addfriend']))
+        {
+            pg_query("select * from sp_send_friend_request('$userName','$friend',2)");
+            $message = "Friend request sent" ;
+            echo "<script type='text/javascript'>alert('$message');</script>";
+        }
+    
 ?>
 </div>
 </div>

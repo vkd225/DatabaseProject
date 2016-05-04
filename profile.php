@@ -307,7 +307,6 @@ $privacyPublic="unchecked";
 				<div class="row">
 					<div class="col-sm-12">
 						<textarea  class="form-control" style="resize:none" readonly=""><?php echo($profile);?></textarea>
-						<p>				</p>
 					</div>
 				</div>
 
