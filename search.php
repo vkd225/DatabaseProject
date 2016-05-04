@@ -3,7 +3,7 @@
 	if (!isset($_SESSION["is_auth"])) 
 	{
 
-    	header("location: login.php");
+   	header("location: login.php");
 		exit;
 
 	}
@@ -111,7 +111,7 @@
 			<div class="row form-group">	
 				<div class="col-sm-12 text-center">
 				<input type="radio" name="SearchBy" id="Friend" value="Friend" required> Friend 
- 				<input type="radio" name="SearchBy" id="FriendOfFriend" value="FriendOfFriend" > Friend Of Friend 
+ 				<input type="radio" name="SearchBy" id="FriendOfFriend" value="FriendOfFriend" > Friends Of Friend 
  				<input type="radio" name="SearchBy" id="Everyone" value="Everyone" > Everyone 
 				</div>
 			</div>	
@@ -156,7 +156,7 @@
 ?>
 																<div class="row" >
 																	<div class="col-sm-2 ">
-																		<input type="text" class="form-control" name="user" readonly="" value="<?php echo ($row[0]);?>"></input>
+																		<input type="text" class="form-control" name="user" style="resize:none" readonly="" value="<?php echo ($row[0]);?>"></input>
 																	</div>
 																	<div class="col-sm-10">
 																		
@@ -164,7 +164,7 @@
 																</div>	
 																<div class="row">	
 																	<div class="col-sm-12">
-																		<textarea class="form-control" readonly="" rows="3" cols="50"><?php echo($row[1]);?> </textarea>
+																		<textarea class="form-control" readonly="" rows="3" style="resize:none" cols="50"><?php echo($row[1]);?> </textarea>
 																	</div>
 																</div>
 <?php
@@ -198,7 +198,7 @@
 ?>
 																<div class="row" >
 																	<div class="col-sm-2 ">
-																		<input type="text" class="form-control" name="user" readonly="" value="<?php echo ($row5[0]);?>"></input>
+																		<input type="text" class="form-control" name="user" style="resize:none" readonly="" value="<?php echo ($row5[0]);?>"></input>
 																	</div>
 																	<div class="col-sm-10">
 																		
@@ -206,7 +206,7 @@
 																</div>	
 																<div class="row">	
 																	<div class="col-sm-12">
-																		<textarea class="form-control" readonly="" rows="3" cols="50"><?php echo($row5[1]);?> </textarea>
+																		<textarea class="form-control" readonly="" style="resize:none" rows="3" cols="50"><?php echo($row5[1]);?> </textarea>
 																	</div>
 																</div>
 <?php
@@ -246,7 +246,7 @@
 																</div>	
 																<div class="row">	
 																	<div class="col-sm-12">
-																		<textarea class="form-control" readonly="" rows="3" cols="50"><?php echo($row1[1]);?> </textarea>
+																		<textarea class="form-control" style="resize:none" readonly="" rows="3" cols="50"><?php echo($row1[1]);?> </textarea>
 																	</div>
 																</div>
 <?php
@@ -286,7 +286,7 @@
 																<div class="panel-body">
 																	<div class="row">
 																		<div class="col-sm-2">
-																			<input class="form-control" type="text" name="user" readonly="" value="<?php echo ($row2[0]);?>"></input>
+																			<input class="form-control" type="text" name="user" style="resize:none" readonly="" value="<?php echo ($row2[0]);?>"></input>
 																		</div>
 																		<div class="col-sm-10">
 																			
@@ -297,7 +297,7 @@
 																			<input type="text" class="form-control " name="title" readonly="" value="<?php echo ($row2[1]);?>"></input>
 																		</div>
 																		<div class="col-sm-2">
-																			<input class="form-control" readonly="" value=" at <?php echo ($time_post);?>"></input>
+																			<input class="form-control" style="resize:none" readonly="" value=" at <?php echo ($time_post);?>"></input>
 																		</div class="col-sm-6">
 																		<div ></div>
 																	</div>
@@ -351,7 +351,7 @@
 																			<input type="text" class="form-control " name="title" readonly="" value="<?php echo ($row3[1]);?>"></input>
 																		</div>
 																		<div class="col-sm-2">
-																			<input class="form-control" readonly="" value=" at <?php echo ($time_post);?>"></input>
+																			<input class="form-control" style="resize:none" readonly="" value=" at <?php echo ($time_post);?>"></input>
 																		</div class="col-sm-6">
 																		<div ></div>
 																	</div>
@@ -393,24 +393,22 @@
 																<div class="panel-body">
 																	<div class="row">
 																		<div class="col-sm-2">
-																			<input class="form-control" type="text" name="user" readonly="" value="<?php echo ($row4[0]);?>"></input>
+																			<b><input class="form-control" type="text" name="user" readonly="" value="<?php echo ($row4[0]);?>"></input></b>
+																			<p>				</p>
 																		</div>
 																		<div class="col-sm-10">
 																			
 																		</div>
 																	</div>
 																	<div class="row">	
-																		<div class="col-sm-4">
+																		<div class="col-sm-3">
 																			<input type="text" class="form-control " name="title" readonly="" value="<?php echo ($row4[1]);?>"></input>
 																		</div>
+																		<div class="col-sm-6">
+																			<textarea readonly="" rows="3" cols="50" style="resize:none" class="form-control"><?php echo($row4[2]);?> </textarea>
+																		</div>
 																		<div class="col-sm-2">
-																			<input class="form-control" readonly="" value=" at <?php echo ($time_post);?>"></input>
-																		</div class="col-sm-6">
-																		<div ></div>
-																	</div>
-																	<div class="row">	
-																		<div class="col-sm-12">
-																			<textarea readonly="" rows="3" cols="50" class="form-control"><?php echo($row4[2]);?> </textarea>
+																			<input class="form-control" readonly="" style="resize:none" value="<?php echo ($time_post);?>"></input>
 																		</div>
 																	</div>
 																</div>
