@@ -126,7 +126,7 @@ if (!isset($_SESSION["is_auth"]))
         <!--The diary entry-->
         <div class="row">
             <div class="col-sm-2">
-                <h4>Diary Entries</h4>
+                <h4>     Diary Entries</h4>
             </div>
         </div>
 <?php
@@ -143,21 +143,21 @@ if (!isset($_SESSION["is_auth"]))
                                 $time_post=date("Y-M-d(g:i a)",strtotime($row3[3]));
 ?>
                                 <div class="row">
-                                    <div class="col-sm-2">
-                                        <h5>Title:</h5>
-                                        <b> <input type="text" class="form-control" name="title_" readonly="" value="<?php echo ($row3[1]);?>"></input> </b>
+                                    <div class="col-sm-9">
 
-                                    </div>
-
-                                    <div class="row">
-                                        <div class="col-sm-3">
+                                        <div class="col-sm-2">
+                                            <h5>Title:</h5>
+                                            <b> <input type="text" class="form-control" name="title_" readonly="" value="<?php echo ($row3[1]);?>"></input> </b>
+                                        </div>
+                                    
+                                        <div class="col-sm-5">
                                             <h5>Body:</h5>
                                             <textarea class="form-control" style="resize:none" readonly=""><?php echo($row3[2]);?> </textarea>
                                         </div>
-                                    </div>
-                                    <div class="col-sm-3">
-                                        <h5>Time Posted:</h5>
-                                        <input type="text" class="form-control" name="time_posted_comment" readonly="" style="resize:none" value="<?php echo ($row3[3]);?>"></input>
+                                        <div class="col-sm-2">
+                                            <h5>Time Posted:</h5>
+                                            <input type="text" class="form-control" name="time_posted_comment" readonly="" style="resize:none" value="<?php echo ($time_post);?>"></input>
+                                        </div>
                                     </div>
                                 </div>
 <?php

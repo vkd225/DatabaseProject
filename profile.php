@@ -1,13 +1,13 @@
 <?php
 session_start();
-#if (!isset($_SESSION["is_auth"]))
-#	{
-#
-#   	header("location: login.php");
-#		exit;
+if (!isset($_SESSION["is_auth"]))
+	{
+
+   	header("location: login.php");
+		exit;
 
 
-#	}
+	}
 $privacyPublic="unchecked";
 	$privacyFriend="unchecked";
 	$privacyFOF="unchecked";
@@ -307,6 +307,7 @@ $privacyPublic="unchecked";
 				<div class="row">
 					<div class="col-sm-12">
 						<textarea  class="form-control" style="resize:none" readonly=""><?php echo($profile);?></textarea>
+						<p>				</p>
 					</div>
 				</div>
 
@@ -392,7 +393,7 @@ $privacyPublic="unchecked";
 			</div>
 		</div>
 		<div class="row">
-			<div class="col-sm-7">
+			<div class="col-sm-5">
 				<textarea class="form-control" style="resize:none" name="comment"></textarea>
 			</div>
 		</div>
@@ -415,13 +416,13 @@ $privacyPublic="unchecked";
 					<p>				</p>
 				</div>
 			</div>
-			<div class="row">
-				<div class="col-sm-6">
-					<input type="text" row ="3" class="form-control input-lg" name="body" id="diary_body" placeholder="Your Diary Entry !!!" /></input>
+<div class="row">
+				<div class="col-sm-5">
+					<textarea rows ="2"  class="form-control input-lg" style="resize:none" name="body" id="diary_body" placeholder="Your Diary Entry !!!" /></textarea>
 					<p>				</p>
 				</div>
 			</div>
-			<div class="radio">
+			
 			<div class="row ">
 				<div class="col-sm-3">
 					<input type="radio"  name="Privacy" id="Public" value="Public" <?php echo $privacyPublic;?>> Public
@@ -435,13 +436,15 @@ $privacyPublic="unchecked";
 			<div class="row">
 				<div class="col-sm-3">
 				<input type="radio" name="Privacy" id="FriendsOfFriends" value="FriendsOfFriends" <?php print $privacyFOF;?> >Friends of Friends
+				<p>				</p>
+				<p>				</p>
 				</div>
 	  		</div>
 	  		
-	  	</div>
+	  	
 
 			<div class="row">
-				<div class="col-sm-1">
+				<div class="col-sm-3">
 					<input type="submit" class="btn btn-primary" name="post" value="post"></input>
 					<p>				</p>
 				</div>
@@ -463,7 +466,7 @@ $privacyPublic="unchecked";
 					   		$result3=pg_execute($conn,"s",array($userName,$commenter,$Comment));
 					   		$SQL3=sprintf('DEALLOCATE "%s"',pg_escape_string($sqlname3));
 					   		pg_query($SQL3);
-					   		header("location:profile.php");
+					   		print "<meta http-equiv='refresh' content='0;url=profile.php'>";
 
 				   		}
 			   	}
@@ -567,22 +570,21 @@ if($_SERVER['REQUEST_METHOD']=='POST')
                             <div class="col-sm-3">
                                 <h5>Body:</h5>
                                 <textarea class="form-control" style="resize:none" readonly=""><?php echo($row3[2]);?> </textarea>
-                                <h5>Comments:</h5>
+                                <div class="text-left">
+                                	<h5>Comments:</h5>
+                                </div>
                             </div>
-                            <div class="col-sm-3">
+                            <div class="col-sm-2">
                                 <h5>Time Posted:</h5>
                                 <input type="text" class="form-control" name="time_posted_comment" readonly="" style="resize:none" value="<?php echo ($time_post);?>"></input>
                             </div>
                             <form  method="Post">
-                            <div class="col-sm-2">
-                        		<input type="Submit" name="<?php echo $row3[0]."editdiarybutton";?>" style="background:none!important;border:none;padding:0!important;font: inherit; cursor: pointer" value="Edit " ></input>
-                        	</div>
-                        	<div class="col-sm-2">
-
-                        		<input type="Submit" name="<?php echo $row3[0]."deletebutton";?>" style="background:none!important;border:none;padding:0!important;font: inherit; cursor: pointer" value="Delete" ></input>
-                        	</form>
-                        	</div
-                                                    </div>
+	                            <div class="col-sm-2">
+	                        		<input type="Submit" name="<?php echo $row3[0]."editdiarybutton";?>" style="background:none!important;border:none;padding:0!important;font: inherit; cursor: pointer" value="Edit " ></input>
+	                        		<input type="Submit" name="<?php echo $row3[0]."deletebutton";?>" style="background:none!important;border:none;padding:0!important;font: inherit; cursor: pointer" value="Delete" ></input>
+	                        	</div>
+                        	</form>                        	
+                       </div>
                     </div>
 <?php
 
@@ -604,7 +606,7 @@ if($_SERVER['REQUEST_METHOD']=='POST')
                                                     <textarea readonly="" style="resize:none" class="form-control"><?php echo($row4[1]);?> </textarea>
                                                     <p>                </p>
                                                 </div>
-                                                <div class="col-sm-3">
+                                                <div class="col-sm-2">
                                                     <input type="text" class="form-control" name="time_posted_comment" readonly="" style="resize:none" value="<?php echo ($time_post);?>"></input>
                                                 </div>
                                             </div>

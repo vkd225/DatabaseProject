@@ -156,15 +156,14 @@
 ?>
 																<div class="row" >
 																	<div class="col-sm-2 ">
-																		<input type="text" class="form-control" name="user" style="resize:none" readonly="" value="<?php echo ($row[0]);?>"></input>
+																		<h5>User:</h5>
+																		<b><input type="text" class="form-control" name="user" style="resize:none" readonly="" value="<?php echo ($row[0]);?>"></input><b>
 																	</div>
-																	<div class="col-sm-10">
 																		
-																	</div>
-																</div>	
-																<div class="row">	
-																	<div class="col-sm-12">
+																	<div class="col-sm-5">
+																		<h5>Profile:</h5>
 																		<textarea class="form-control" readonly="" rows="3" style="resize:none" cols="50"><?php echo($row[1]);?> </textarea>
+																		<p>				</p>
 																	</div>
 																</div>
 <?php
@@ -198,15 +197,13 @@
 ?>
 																<div class="row" >
 																	<div class="col-sm-2 ">
-																		<input type="text" class="form-control" name="user" style="resize:none" readonly="" value="<?php echo ($row5[0]);?>"></input>
+																		<h5>User:</h5>
+																		<b><input type="text" class="form-control" name="user" style="resize:none" readonly="" value="<?php echo ($row5[0]);?>"></input><b>
 																	</div>
-																	<div class="col-sm-10">
-																		
-																	</div>
-																</div>	
-																<div class="row">	
-																	<div class="col-sm-12">
+																	<div class="col-sm-5">
+																		<h5>Profile:</h5>
 																		<textarea class="form-control" readonly="" style="resize:none" rows="3" cols="50"><?php echo($row5[1]);?> </textarea>
+																		<p>				</p>
 																	</div>
 																</div>
 <?php
@@ -238,14 +235,12 @@
 ?>
 																<div class="row" >
 																	<div class="col-sm-2 ">
-																		<input type="text" class="form-control" name="user" readonly="" value="<?php echo ($row1[0]);?>"></input>
+																		<h5>User:</h5>
+																		<b><input type="text" class="form-control" name="user" readonly="" value="<?php echo ($row1[0]);?>"></input></b>
 																	</div>
-																	<div class="col-sm-10">
 																		
-																	</div>
-																</div>	
-																<div class="row">	
-																	<div class="col-sm-12">
+																	<div class="col-sm-5">
+																		<h5>Profile:</h5>
 																		<textarea class="form-control" style="resize:none" readonly="" rows="3" cols="50"><?php echo($row1[1]);?> </textarea>
 																	</div>
 																</div>
@@ -286,25 +281,20 @@
 																<div class="panel-body">
 																	<div class="row">
 																		<div class="col-sm-2">
-																			<input class="form-control" type="text" name="user" style="resize:none" readonly="" value="<?php echo ($row2[0]);?>"></input>
-																		</div>
-																		<div class="col-sm-10">
-																			
+																			<b><input class="form-control" type="text" name="user" style="resize:none" readonly="" value="<?php echo ($row2[0]);?>"></input></b>
+																			<p>				</p>
 																		</div>
 																	</div>
-																	<div class="row">	
-																		<div class="col-sm-4">
+																	<div class="row">
+																		<div class="col-sm-3">
 																			<input type="text" class="form-control " name="title" readonly="" value="<?php echo ($row2[1]);?>"></input>
 																		</div>
-																		<div class="col-sm-2">
-																			<input class="form-control" style="resize:none" readonly="" value=" at <?php echo ($time_post);?>"></input>
-																		</div class="col-sm-6">
-																		<div ></div>
-																	</div>
-																	<div class="row">	
-																		<div class="col-sm-12">
-																			<textarea readonly="" rows="3" cols="50" class="form-control"><?php echo($row2[2]);?> </textarea>
+																		<div class="col-sm-5">
+																			<textarea readonly="" rows="3" style="resize:none" cols="50" class="form-control"><?php echo($row2[2]);?> </textarea>
 																		</div>
+																		<div class="col-sm-2">
+																			<input class="form-control" style="resize:none" readonly="" value=" <?php echo ($time_post);?>"></input>
+																		</div class="col-sm-2">
 																	</div>
 																</div>
 																</div>
