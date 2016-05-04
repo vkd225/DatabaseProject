@@ -87,7 +87,23 @@ if (!isset($_SESSION["is_auth"]))
                             <input type="text" id="searchUser" name="searchUser" class="form-control" placeholder="Search Users">
                         </div>
                         <input type="submit" id="searchButton" name="searchButton" class="btn btn-default" value="Submit"></input>
+<?php
+                    $friendrequestsent=pg_query("select * from friendship where user_name='$userName' and friend_id='$friend' ");
+                    $rows13=pg_num_rows($friendrequestsent);    
+                        if($rows13>0)
+                        {
+ ?>                           
+                            <input type="submit" id="addfriend" name="addfriend" disabled="" class="btn btn-primary" value="Waiting"></input>
+<?php                       
+                        }
+                        else
+                        {
+
+?>                        
                         <input type="submit" id="addfriend" name="addfriend" class="btn btn-primary" value="+ Add friend"></input>
+<?php
+                        }
+?>                        
                     </form>
 
                     <ul class="nav navbar-nav navbar-right">
@@ -166,6 +182,7 @@ if (!isset($_SESSION["is_auth"]))
             pg_query("select * from sp_send_friend_request('$userName','$friend',2)");
              $message = "Friend request sent" ;
             echo "<script type='text/javascript'>alert('$message');</script>";
+            echo "<meta http-equiv='refresh' content='0;url=http://localhost/searchuserfriendfof.php'>";
         }
     
 ?>

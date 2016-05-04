@@ -185,7 +185,7 @@ $privacyPublic="unchecked";
 							{
 
 ?>
-							     <a class="content" href="#">
+							    <a class="content" href="#">
 							       <div class="notification-item">
 							        	<h4 class="item-title"><?php echo $row[0]; ?></h4>
 							        	<p class="item-info">changed his profile</p>
