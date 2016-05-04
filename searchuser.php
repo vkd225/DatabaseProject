@@ -115,7 +115,8 @@ $host        = "host=pdc-amd01.poly.edu";
                         {
 
                             if (isset($_POST[$row[0]]))
-                                {
+                                {	$checkfriend=False;
+                                	$checkfof=False;
                                 	$_SESSION['searcheduser']=$row[0];
                                 	$person=$_SESSION['searcheduser'];
                                 	$userName=$_SESSION['user'];

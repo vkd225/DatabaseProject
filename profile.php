@@ -500,7 +500,7 @@ $privacyPublic="unchecked";
 					   		$result5=pg_execute($conn,"s",array($userName,$title,$body,$privacy));
 					   		$SQL5=sprintf('DEALLOCATE "%s"',pg_escape_string($sqlname5));
 					   		pg_query($SQL5);
-					   		header("<meta http-equiv='refresh' content='0;url=http://localhost/profile.php'>");
+					   		echo "<meta http-equiv='refresh' content='0;url=http://localhost/profile.php'>";
 
 				   		}
 			   	}
@@ -529,7 +529,7 @@ if($_SERVER['REQUEST_METHOD']=='POST')
                                             $result7=pg_execute($conn,"k",array($userName,$userName,$body1,$diaryentry_id));
                                             $SQL7=sprintf('DEALLOCATE "%s"',pg_escape_string($sqlname7));
                                             pg_query($SQL7);
-                                            header("<meta http-equiv='refresh' content='0;url=http://localhost/profile.php'>");
+                                            echo"<meta http-equiv='refresh' content='0;url=http://localhost/profile.php'>";
                                         }
                                     break;
 
@@ -702,7 +702,7 @@ if($_SERVER['REQUEST_METHOD']=='POST')
                             if (isset($_POST[$row[0]."deletebutton"]))
                                 {
                                 	$_SESSION['deltediaryid']=$row[0];
-                                	echo ("<meta http-equiv='refresh' content='0;url=http://localhost/deletediaryentry.php'>");
+                                	echo "<meta http-equiv='refresh' content='0;url=http://localhost/deletediaryentry.php'>";
                                 }
                         }
 

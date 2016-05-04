@@ -186,6 +186,16 @@ if (!isset($_SESSION["is_auth"]))
             echo "<script type='text/javascript'>alert('$message');</script>";
             echo "<meta http-equiv='refresh' content='0;url=http://localhost/searchuserfriendfof.php'>";
         }
+        if (isset($_POST["searchButton"])) 
+        {
+            
+            if (isset($_POST["searchUser"]))
+                {
+                    
+                    $_SESSION['searchUser']=$_POST["searchUser"];
+                    echo "<meta http-equiv='refresh' content='0;url=http://localhost/searchuser.php'>";
+                }
+        }
     
 ?>
 </div>

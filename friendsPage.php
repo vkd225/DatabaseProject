@@ -22,6 +22,7 @@ if (!isset($_SESSION["is_auth"]))
     $userName=$_SESSION['user'];
     $friend=$_SESSION['friend'];
 	#profile from database
+	
 	$stmt=pg_prepare($conn,"s","select profile from user_profile where user_name=$1");
 	$sqlname="s";
 	$result=pg_execute($conn,$sqlname,array("$friend"));
@@ -51,7 +52,7 @@ if (!isset($_SESSION["is_auth"]))
 						 echo "i am in search user";
 
 							$_SESSION["searchUser"]=$_POST["searchUser"];
-							header('location: searchuser.php');
+							echo "<meta http-equiv='refresh' content='0;url=http://localhost/searchuser.php'>";
 						}
 				}
 		}

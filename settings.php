@@ -236,7 +236,7 @@ if (!isset($_SESSION["is_auth"]))
 				 echo "i am in search user";
 
 					$_SESSION["searchUser"]=$_POST["searchUser"];
-					header('location: searchuser.php');
+					echo "<meta http-equiv='refresh' content='0;url=http://localhost/searchuser.php'>";
 				}
 		}
 
