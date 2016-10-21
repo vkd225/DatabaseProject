@@ -1,10 +1,10 @@
 <?php
 function connection()
    {
-      $host        = "host=pdc-amd01.poly.edu";
-      $port        = "port=5432";
-      $dbname      = "dbname=psk287";
-      $credentials = "user=ku336 password=e0eycb7p";
+      $host        = "Enter Host";
+      $port        = "Enter port";
+      $dbname      = "Database Name";
+      $credentials = "user= password= ";
 
       $conn = pg_connect( "$host $port $dbname $credentials"  );
       if(!$conn)
