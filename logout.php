@@ -1,9 +1,9 @@
 <?php
 session_start();
-	$host        = "host=pdc-amd01.poly.edu";
-	$port        = "port=5432";
-	$dbname      = "dbname=ku336";
-	$credentials = "user=ku336 password=e0eycb7p";
+	$host        = "host=";
+	$port        = "port=";
+	$dbname      = "dbname=";
+	$credentials = "user= password=";
 
    	$conn = pg_connect( "$host $port $dbname $credentials"  );
    	if(!$conn)
