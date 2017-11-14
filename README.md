@@ -1,6 +1,6 @@
-# Socail networking Website for geeks (techies.com)
+# Social networking Website for geeks (techies.com)
 
-## Create a database and write Stored Procedures to query from the database
+### Create a database and write Stored Procedures to query from the database
 
 Academic project <br />
 Major emphasis on the database <br />
